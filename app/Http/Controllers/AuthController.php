@@ -2,24 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-   /**
+    /**
      * Create a new AuthController instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','signup']]);
     }
 
     /**
      * Get a JWT token via given credentials.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -90,5 +94,24 @@ class AuthController extends Controller
     public function guard()
     {
         return Auth::guard();
+    }
+
+    public function signup(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|unique:users|max:255',
+            'firstname' => 'required',
+            'password' => 'required|min:6|confirmed'
+        ]);
+        $password = $request->input('password');
+        $data = array();
+        $data["phone"] = $request->input('phone');
+        $data["username"] = $request->input('firstname');
+        $data["firstname"] = $request->input('firstname');
+        $data["lastname"] = $request->input('lastname');
+        $data["email"] = $request->input('email');
+        $data["password"] = Hash::make($password);
+        $user = DB::table("users")->insert($data);
+        return $this->login($request);
     }
 }
