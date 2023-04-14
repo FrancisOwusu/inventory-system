@@ -14,10 +14,11 @@
                                             Login
                                         </h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" @submit.prevent="login">
                                         <div class="form-group">
                                             <input
                                                 type="email"
+                                                v-model="form.email"
                                                 class="form-control"
                                                 id="exampleInputEmail"
                                                 aria-describedby="emailHelp"
@@ -27,12 +28,13 @@
                                         <div class="form-group">
                                             <input
                                                 type="password"
+                                                v-model="form.password"
                                                 class="form-control"
                                                 id="exampleInputPassword"
                                                 placeholder="Password"
                                             />
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <div
                                                 class="custom-control custom-checkbox small"
                                                 style="line-height: 1.5rem"
@@ -48,13 +50,14 @@
                                                     >Remember Me</label
                                                 >
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="form-group">
-                                            <a
-                                                href="index.html"
+                                            <button
+                                                type="submit"
                                                 class="btn btn-primary btn-block"
-                                                >Login</a
                                             >
+                                                Login
+                                            </button>
                                         </div>
                                         <hr />
                                     </form>
@@ -84,8 +87,38 @@
 </template>
 
 <script>
+import User from "../../Helpers/User";
 export default {
-    name: "Login",
+    data() {
+        return {
+            form: {
+                email: null,
+                password: null,
+            },
+        };
+    },
+    methods: {
+        login() {
+            console.log(this.form);
+            //get posts
+            axios
+                .post("/api/auth/login", this.form)
+                .then((response) => {
+                    User.responseAfterLogin(response);
+                    // console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error.response.data);
+                });
+            // .finally(() => (this.loading = false));
+        },
+        // reverseMessage() {
+        //   this.message = this.message.split('').reverse().join('')
+        // },
+        // notify() {
+        //   alert('navigation was prevented.')
+        // }
+    },
 };
 </script>
 
