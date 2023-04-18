@@ -1,10 +1,28 @@
 <template>
-    $END$
+    
 </template>
 
 <script>
     export default {
-        name: "Logout"
+        name: "Logout",
+        created(){
+         localStorage.removeItem('token');
+         localStorage.removeItem('user');
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Logout successfully'
+            })
+            this.$router.push('/');
+        },
+        data(){
+            return {
+
+            }
+        },
+        methods:{
+
+        }
     }
 </script>
 

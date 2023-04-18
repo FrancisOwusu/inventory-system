@@ -5,10 +5,10 @@
                 <!-- Form Basic -->
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Form Basic</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Update Form</h6>
                     </div>
                     <div class="card-body">
-                        <form @submit.prevent="employeeInsert" enctype="multipart/form-data">
+                        <form @submit.prevent="updateEmployee" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input
@@ -96,7 +96,7 @@
                                                    @change="onFileSelected" id="customFile">
                                             <label class="custom-file-label" for="customFile">Choose file</label>
                                         </div>
-                                        <span class="text-danger" v-if="errors.photo">{{errors.photo[0]}}</span>
+                                        <span class="text-danger" v-if="errors.newphoto">{{errors.newphoto[0]}}</span>
                                     </div>
 
                                     <div class="form-group">
@@ -133,31 +133,42 @@
 <script>
     export default {
         name: "create",
-        created() {
-            if (!User.loggedIn()) {
-                this.$router.push({name:'/'});
-            }
-        },
+
         data() {
             return {
                 form: {
-                    name: null,
-                    salary: null,
-                    email: null,
-                    phone: null,
-                    nid: null,
-                    address: null,
-                    photo: null,
-                    date_joining: null
+                    name: '',
+                    salary: '',
+                    email: '',
+                    phone: '',
+                    nid: '',
+                    address: '',
+                    photo: '',
+                    newphoto: '',
+                    date_joining: ''
                 },
                 errors: {}
             };
         },
+        created() {
+            if (!User.loggedIn()) {
+                this.$router.push({name:'/'});
+            }
+            let id = this.$route.params.id;
 
+            axios
+                .get("/api/employee/" +id)
+                .then(({data}) => {(this.form = data)
+                console.log(data)}
+                )
+                .catch((error) => {
+                    this.errors = error.response.data.errors
+                })
+        },
         methods: {
-            employeeInsert() {
-                axios
-                    .post("/api/employee", this.form)
+            updateEmployee() {
+                let id = this.$route.params.id;
+                axios.patch("/api/employee/" + id, this.form)
                     .then((response) => {
                    this.$router.push({name:"employees"})
                         Toast.fire({
@@ -177,6 +188,7 @@
                 // );
                 // .finally(() => (this.loading = false));
             },
+
             // reverseMessage() {
             //   this.message = this.message.split('').reverse().join('')
             // },
@@ -194,7 +206,7 @@
                 } else {
                     let reader = new FileReader();
                     reader.onload = event => {
-                        this.form.photo = event.target.result;
+                        this.form.newphoto = event.target.result;
                     };
                     reader.readAsDataURL(file);
                 }

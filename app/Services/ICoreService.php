@@ -9,7 +9,17 @@
 namespace App\Services;
 
 
-class ICoreService
+interface ICoreService
 {
+    public function findAll();
 
+    public function find($id);
+
+    public function store(array $data);
+
+    public function update($id, array $data);
+
+    public function delete($id, $data=null);
+
+    public function model();
 }

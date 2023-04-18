@@ -17,21 +17,22 @@
                                     <form class="user" @submit.prevent="login">
                                         <div class="form-group">
                                             <input
-                                                type="email"
-                                                v-model="form.email"
-                                                class="form-control"
-                                                id="exampleInputEmail"
-                                                aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address"
+                                                    type="email"
+                                                    v-model="form.email"
+                                                    class="form-control"
+                                                    id="exampleInputEmail"
+                                                    aria-describedby="emailHelp"
+                                                    placeholder="Enter Email Address"
                                             />
+                                            <span class="text-danger" v-if="errors.email">{{errors.email[0]}}</span>
                                         </div>
                                         <div class="form-group">
                                             <input
-                                                type="password"
-                                                v-model="form.password"
-                                                class="form-control"
-                                                id="exampleInputPassword"
-                                                placeholder="Password"
+                                                    type="password"
+                                                    v-model="form.password"
+                                                    class="form-control"
+                                                    id="exampleInputPassword"
+                                                    placeholder="Password"
                                             />
                                         </div>
                                         <!-- <div class="form-group">
@@ -53,26 +54,28 @@
                                         </div> -->
                                         <div class="form-group">
                                             <button
-                                                type="submit"
-                                                class="btn btn-primary btn-block"
+                                                    type="submit"
+                                                    class="btn btn-primary btn-block"
                                             >
                                                 Login
                                             </button>
                                         </div>
-                                        <hr />
+                                        <hr/>
                                     </form>
-                                    <hr />
+                                    <hr/>
                                     <div class="text-center">
                                         <router-link
-                                            to="/register"
-                                            class="font-weight-bold small"
-                                            >Create an Account!</router-link
+                                                to="/register"
+                                                class="font-weight-bold small"
+                                        >Create an Account!
+                                        </router-link
                                         >
-                                        <br />
+                                        <br/>
                                         <router-link
-                                            to="/forgot"
-                                            class="font-weight-bold small"
-                                            >Forgot Password</router-link
+                                                to="/forgot"
+                                                class="font-weight-bold small"
+                                        >Forgot Password
+                                        </router-link
                                         >
                                     </div>
                                     <div class="text-center"></div>
@@ -87,39 +90,62 @@
 </template>
 
 <script>
-import User from "../../Helpers/User";
-export default {
-    data() {
-        return {
-            form: {
-                email: null,
-                password: null,
-            },
-        };
-    },
-    methods: {
-        login() {
-            console.log(this.form);
-            //get posts
-            axios
-                .post("/api/auth/login", this.form)
-                .then((response) => {
-                    User.responseAfterLogin(response);
-                    // console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error.response.data);
-                });
-            // .finally(() => (this.loading = false));
+    import User from "../../Helpers/User";
+
+    export default {
+        created() {
+            if (User.loggedIn()) {
+                this.$router.push('/home');
+            }
         },
-        // reverseMessage() {
-        //   this.message = this.message.split('').reverse().join('')
-        // },
-        // notify() {
-        //   alert('navigation was prevented.')
-        // }
-    },
-};
+        data() {
+            return {
+                form: {
+                    email: null,
+                    password: null,
+                },
+                errors:{
+
+                }
+            };
+        },
+        methods: {
+            login() {
+                axios
+                    .post("/api/auth/login", this.form)
+                    .then((response) => {
+                         User.responseAfterLogin(response);
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Signed in successfully'
+                        })
+
+                        // if(authenticated){
+                        this.$router.push('/home');
+                        // this.$router.push({name:'Home'});
+                        // }else{
+                        //     this.$router.push('/');
+                        // }
+                        // console.log(response.data);
+                    })
+                    .catch((error) => {
+                        this.errors = error.response.data.errors
+                    }).catch(
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'Invalid Email or Password'
+                    })
+                );
+                // .finally(() => (this.loading = false));
+            },
+            // reverseMessage() {
+            //   this.message = this.message.split('').reverse().join('')
+            // },
+            // notify() {
+            //   alert('navigation was prevented.')
+            // }
+        },
+    };
 </script>
 
 <style scoped></style>

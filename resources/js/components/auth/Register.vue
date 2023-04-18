@@ -12,11 +12,12 @@
                                             Register
                                         </h1>
                                     </div>
-                                    <form>
+                                    <form class="user" @submit.prevent="signup">
                                         <div class="form-group">
                                             <label>First Name</label>
                                             <input
                                                 type="text"
+                                                v-model="form.firstname"
                                                 class="form-control"
                                                 id="exampleInputFirstName"
                                                 placeholder="Enter First Name"
@@ -26,6 +27,7 @@
                                             <label>Last Name</label>
                                             <input
                                                 type="text"
+                                                v-model="form.lastname"
                                                 class="form-control"
                                                 id="exampleInputLastName"
                                                 placeholder="Enter Last Name"
@@ -35,6 +37,7 @@
                                             <label>Email</label>
                                             <input
                                                 type="email"
+                                                v-model="form.email"
                                                 class="form-control"
                                                 id="exampleInputEmail"
                                                 aria-describedby="emailHelp"
@@ -45,6 +48,7 @@
                                             <label>Password</label>
                                             <input
                                                 type="password"
+                                                v-model="form.password"
                                                 class="form-control"
                                                 id="exampleInputPassword"
                                                 placeholder="Password"
@@ -54,6 +58,7 @@
                                             <label>Repeat Password</label>
                                             <input
                                                 type="password"
+                                                v-model="form.password_confirmation"
                                                 class="form-control"
                                                 id="exampleInputPasswordRepeat"
                                                 placeholder="Repeat Password"
@@ -92,6 +97,63 @@
 <script>
 export default {
     name: "Register",
+    created() {
+        if (!User.loggedIn()) {
+            this.$router.push({name:'/'});
+        }
+    },
+    data(){
+        return {
+            form: {
+                email: null,
+                password: null,
+                firstname:null,
+                lastname:null,
+                password_confirmation:null
+            },
+            errors:{
+
+            }
+        };
+    },
+
+    methods: {
+        store_employee() {
+            axios
+                .post("/api/auth/signup", this.form)
+                .then((response) => {
+                    User.responseAfterLogin(response);
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Signed in successfully'
+                    })
+
+                    // if(authenticated){
+                    this.$router.push('/home');
+                    // this.$router.push({name:'Home'});
+                    // }else{
+                    //     this.$router.push('/');
+                    // }
+                    // console.log(response.data);
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors
+                })
+            //     .catch(
+            //     Toast.fire({
+            //         icon: 'warning',
+            //         title: 'Invalid Email or Password'
+            //     })
+            // );
+            // .finally(() => (this.loading = false));
+        },
+        // reverseMessage() {
+        //   this.message = this.message.split('').reverse().join('')
+        // },
+        // notify() {
+        //   alert('navigation was prevented.')
+        // }
+    },
 };
 </script>
 

@@ -9,7 +9,12 @@
 namespace App\Services;
 
 
-class EmployeeService
-{
+use App\Repositories\ICoreRepository;
 
+class EmployeeService extends CoreService
+{
+    public function __construct(ICoreRepository $repository)
+    {
+        parent::__construct($repository);
+    }
 }

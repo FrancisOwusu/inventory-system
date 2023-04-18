@@ -9,7 +9,12 @@
 namespace App\Repositories;
 
 
-class EmployeeRepository
-{
+use App\Models\Employee;
 
+class EmployeeRepository extends CoreRepository
+{
+public function __construct()
+{
+    parent::__construct(Employee::class);
+}
 }

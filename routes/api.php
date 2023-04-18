@@ -17,7 +17,7 @@
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
+use App\Http\Controllers\Api\EmployeeController;
 Route::group([
 
     'middleware' => 'api',
@@ -34,3 +34,6 @@ Route::group([
     Route::post('me', 'AuthController@me');
 
 });
+
+
+Route::resource('employee',EmployeeController::class);

@@ -10,4 +10,27 @@ export default defineConfig({
             'resources/js/app.js',
         ]),
     ],
+    // resolve: {
+    //     alias: {
+    //         '~': '/node_modules/noty/src'
+    //         // this is required for the SCSS modules
+    //         find: /^~(.*)$/,
+    //         replacement: '$1',
+    //     }
+    // },
+    // resolve: {
+    //     alias: [
+    //         {
+    //             // this is required for the SCSS modules
+    //             // '~': '/node_modules/noty/src',
+    //             // find: /^~(.*)$/,
+    //             // replacement: '$1',
+    //         },
+    //     ],
+    // },
+    // resolve: {
+    //     alias: {
+    //         '~noty': 'node_modules/noty/src/'
+    //     }
+    // }
 });
