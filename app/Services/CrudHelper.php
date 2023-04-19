@@ -2,28 +2,29 @@
 /**
  * Created by PhpStorm.
  * User: HP
- * Date: 4/15/2023
- * Time: 10:57 PM
+ * Date: 4/19/2023
+ * Time: 10:47 AM
  */
 
-namespace App\Repositories;
+namespace App\Services;
 
 
-use App\Services\ICoreService;
+use App\Repositories\CoreRepository;
+use App\Repositories\ICoreRepository;
 
-class CoreRepository implements ICoreService
+class CrudHelper implements ICoreRepository
 {
-    protected $repository;
+    protected $model;
 
-    public function __construct(ICoreRepository $repository)
+    public function __construct($model)
     {
-        $this->repository = $this->repository;
+        $this->model = $model;
     }
 
     public function findAll()
     {
         // TODO: Implement findAll() method.
-        $this->repository->allAll();
+        $this->model::query();
     }
 
     /**
@@ -32,19 +33,19 @@ class CoreRepository implements ICoreService
     public function find($id): Builder
     {
         // TODO: Implement find() method.
-        return $this->repository->find($id);
+        return $this->model::find($id);
     }
 
     public function store(array $data)
     {
         // TODO: Implement store() method.
-       return $this->repository->store($data);
+        return $this->model::create($data);
     }
 
     public function update($id, array $data)
     {
         // TODO: Implement update() method.
-        $resource = $this->repository->find($id);
+        $resource = $this->model->find($id);
         if($resource){
             $resource->update($data);
         }
@@ -67,6 +68,5 @@ class CoreRepository implements ICoreService
         // TODO: Implement model() method.
         return $this->model;
     }
-
 
 }

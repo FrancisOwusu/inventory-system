@@ -40,6 +40,7 @@ abstract class CoreController extends Controller
      */
     public function index($data = null)
     {
+
         return Paginate::paginate(
             app(Pipeline::class)
                 ->send($data ?: $this->service->findAll())

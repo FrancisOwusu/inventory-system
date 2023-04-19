@@ -6,6 +6,10 @@ import StoreEmployee from './components/pages/employee/create.vue'
 import AllEmployee from './components/pages/employee/index.vue'
 import EditEmployee from './components/pages/employee/edit.vue'
 
+import StoreCategory from './components/pages/categories/create.vue'
+import AllCategory from './components/pages/categories/index.vue'
+import EditCategory from './components/pages/categories/edit.vue'
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -50,6 +54,23 @@ const router = createRouter({
             path: '/store-employee',
             name: 'store-employee',
             component: StoreEmployee
+        }
+        //category
+        ,
+        {
+            path: '/categories',
+            name: 'categories',
+            component: AllCategory
+        },
+        {
+            path: '/categories/edit/:id',
+            name: 'edit-category',
+            component: EditCategory
+        },
+        {
+            path: '/store-category',
+            name: 'store-category',
+            component: StoreCategory
         }
     ],
 });

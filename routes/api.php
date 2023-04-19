@@ -18,6 +18,8 @@
 //     return $request->user();
 // });
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\SupplierController;
+use App\Http\Controllers\Api\CategoryController;
 Route::group([
 
     'middleware' => 'api',
@@ -37,3 +39,5 @@ Route::group([
 
 
 Route::resource('employee',EmployeeController::class);
+Route::resource('supplier',SupplierController::class);
+Route::resource('categories',CategoryController::class);

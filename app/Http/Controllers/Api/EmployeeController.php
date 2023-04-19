@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use App\Repositories\EmployeeRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Image;
@@ -12,15 +13,23 @@ class EmployeeController extends
 //    CoreController
     Controller
 {
+    protected $model;
+    protected $repository;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(Employee $model)
+    {
+        $this->model = $model;
+    }
+
     public function index()
     {
         //
-        $employee = Employee::all();
+        $employee = $this->model::all();
+//            Employee::all();
         return response()->json($employee);
     }
 //
