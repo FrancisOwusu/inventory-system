@@ -57,9 +57,8 @@
     export default {
         name: "index",
         created() {
-            if (!User.loggedIn()) {
-                this.$router.push({name: '/'});
-            }
+            Auth.checkIsAuthenticated();
+            // AuthService.checkIsAuthenticated
             this.allCategories();
         },
         data() {

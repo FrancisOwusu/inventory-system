@@ -114,28 +114,24 @@
                 axios
                     .post("/api/auth/login", this.form)
                     .then((response) => {
-                         User.responseAfterLogin(response);
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Signed in successfully'
-                        })
+                        let auth= User.responseAfterLogin(response);
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Signed in successfully'
+                            })
 
-                        // if(authenticated){
-                        this.$router.push('/home');
-                        // this.$router.push({name:'Home'});
-                        // }else{
-                        //     this.$router.push('/');
-                        // }
-                        // console.log(response.data);
+                            // if(authenticated){
+                            this.$router.push('/home');
+
+
                     })
                     .catch((error) => {
                         this.errors = error.response.data.errors
-                    }).catch(
-                    Toast.fire({
-                        icon: 'warning',
-                        title: 'Invalid Email or Password'
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'Invalid Email or Password'
+                        })
                     })
-                );
                 // .finally(() => (this.loading = false));
             },
             // reverseMessage() {

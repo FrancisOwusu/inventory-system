@@ -25,6 +25,7 @@ window.Toast = Toast;
 window.Notification = Notification;
 //import user
 import User from './Helpers/User'
+import AuthService from './Helpers/AuthService'
 const app = createApp({
     // components:{
     //     AppComponent
@@ -32,6 +33,7 @@ const app = createApp({
 });
 //make user global
 window.User = User;
+window.Auth =AuthService;
 
 app.use(router);
 //

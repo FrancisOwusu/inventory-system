@@ -338,6 +338,7 @@
     export default {
         name: "Home",
         created() {
+            // Auth.checkIsAuthenticated();
             if (!User.loggedIn()) {
                 this.$router.push({name:'/'});
             }

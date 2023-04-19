@@ -118,7 +118,7 @@ export default {
     },
 
     methods: {
-        store_employee() {
+        signup() {
             axios
                 .post("/api/auth/signup", this.form)
                 .then((response) => {

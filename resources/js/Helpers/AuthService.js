@@ -30,6 +30,11 @@ class AuthService {
             password: user.password
         });
     }
+    checkIsAuthenticated(){
+        if (!User.loggedIn()) {
+            this.$router.push({name:'/'});
+        }
+    }
 }
 
 export default new AuthService();
