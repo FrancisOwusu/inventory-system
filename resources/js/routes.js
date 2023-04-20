@@ -10,6 +10,10 @@ import StoreCategory from './components/pages/categories/create.vue'
 import AllCategory from './components/pages/categories/index.vue'
 import EditCategory from './components/pages/categories/edit.vue'
 
+import StoreSupplier from './components/pages/supplier/create.vue'
+import AllSupplier from './components/pages/supplier/index.vue'
+import EditSupplier from './components/pages/supplier/edit.vue'
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -37,9 +41,8 @@ const router = createRouter({
             path: '/logout',
             name: 'Logout',
             component: Logout
-        }
-        //employee
-        ,
+        },
+        //employee,
         {
             path: '/employees',
             name: 'employees',
@@ -50,11 +53,7 @@ const router = createRouter({
             name: 'edit-employee',
             component: EditEmployee
         },
-        {
-            path: '/store-employee',
-            name: 'store-employee',
-            component: StoreEmployee
-        }
+        {path: '/store-employee', name: 'store-employee', component: StoreEmployee}
         //category
         ,
         {
@@ -71,6 +70,22 @@ const router = createRouter({
             path: '/store-category',
             name: 'store-category',
             component: StoreCategory
+        },
+        //employee,
+        {
+            path: '/suppliers',
+            name: 'suppliers',
+            component: AllSupplier
+        },
+        {
+            path: '/supplier/edit/:id',
+            name: 'edit-supplier',
+            component: EditSupplier
+        },
+        {
+            path: '/store-supplier',
+            name: 'store-supplier',
+            component: StoreSupplier
         }
     ],
 });

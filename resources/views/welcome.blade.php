@@ -81,26 +81,26 @@
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             {{--<h6 class="collapse-header">Bootstrap UI</h6>--}}
-                            <router-link class="collapse-item" to="/store-employee">Add Employee</router-link>
-                            <router-link class="collapse-item" to="/employees">All Employees</router-link>
+                            <router-link class="collapse-item" to="/store-supplier">Add Supplier</router-link>
+                            <router-link class="collapse-item" to="/suppliers">All Suppliers</router-link>
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
-                       aria-expanded="true" aria-controls="collapseBootstrap">
-                        <i class="far fa-fw fa-window-maximize"></i>
-                        <span>Products</span>
-                    </a>
-                    <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
-                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
+                {{--<li class="nav-item">--}}
+                    {{--<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"--}}
+                       {{--aria-expanded="true" aria-controls="collapseBootstrap">--}}
+                        {{--<i class="far fa-fw fa-window-maximize"></i>--}}
+                        {{--<span>Products</span>--}}
+                    {{--</a>--}}
+                    {{--<div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"--}}
+                         {{--data-parent="#accordionSidebar">--}}
+                        {{--<div class="bg-white py-2 collapse-inner rounded">--}}
                             {{--<h6 class="collapse-header">Bootstrap UI</h6>--}}
-                            <router-link class="collapse-item" to="/store-employee">Add Employee</router-link>
-                            <router-link class="collapse-item" to="/employees">All Employees</router-link>
-                        </div>
-                    </div>
-                </li>
+                            {{--<router-link class="collapse-item" to="/store-employee">Add Employee</router-link>--}}
+                            {{--<router-link class="collapse-item" to="/employees">All Employees</router-link>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</li>--}}
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm"
                        aria-expanded="true" aria-controls="collapseForm">

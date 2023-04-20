@@ -27,9 +27,7 @@ class EmployeeController extends
 
     public function index()
     {
-        //
-        $employee = $this->model::all();
-//            Employee::all();
+        $employee =Employee::all();
         return response()->json($employee);
     }
 //
