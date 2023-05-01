@@ -3,62 +3,58 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Supplier;
-use App\Services\CoreService;
-use App\Services\CrudHelper;
-use App\Services\ICoreService;
-use Illuminate\Http\Request;
 
-class SupplierController extends Controller{
-       public function index()
-{
-    $Supplier =Supplier::all();
-    return response()->json($supplier);
-}
-//
-//    /**
-//     * Show the form for creating a new resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function create()
-//    {
-//        //
-//    }
-//
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Image;
+
+class SupplierController extends CoreController {
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-{
-    $validated = $request->validate([
-        'name' => 'required',
-        'email' => 'required',
-//            'salary' => 'required',
-        'phone' => 'required',
-    ]);
-    $data = $request->all();
-    if ($request->photo) {
-        $position = strpos($request->photo, ';');
-        $sub = substr($request->photo, 0, $position);
-        $ext = explode('/', $sub)[1];
-
-        $name = time() . "." . $ext;
-        $img = Image::make($request->photo)->resize(240, 200);
-        $upload_path = 'backend/employee/';
-        $image_url = $upload_path . $name;
-        $img->save($image_url);
+    public function store(Request $request): JsonResponse
+    {
+        $data = $request->validate($this->service->model()::storeRules(), $this->service->model()::errorMessages());
+       dd($data);
 
 
-        $data["photo"] = $image_url;
-        $supplier = Supplier::create($data);
-    } else {
-        $supplier = Supplier::create($data);
+        $photo_source = $data["photo"];
+//        $data = $request->all();
+        if ($request->photo && !is_null($photo_source)) {
+            $position = strpos($photo_source, ';');
+            $sub = substr($photo_source, 0, $position);
+            $ext = explode('/', $sub)[1];
+
+            $name = time() . "." . $ext;
+            $img = Image::make($photo_source)->resize(240, 200);
+            $upload_path = 'backend/employee/';
+            $image_url = $upload_path . $name;
+            $img->save($image_url);
+
+
+            $data["photo"] = $image_url;
+            return response()->json(
+                [$this->service->store($data)
+                ],
+                Response::HTTP_CREATED
+            );
+//            $supplier = Supplier::create($data);
+        }
+
+        return response()->json(
+            [$this->service->store($data)
+            ],
+            Response::HTTP_CREATED
+        );
     }
-}
+
+
+
 //
 //    /**
 //     * Display the specified resource.
@@ -66,67 +62,53 @@ class SupplierController extends Controller{
 //     * @param  int  $id
 //     * @return \Illuminate\Http\Response
 //     */
-    public function show($id)
-{
-    $resource = Supplier::where("id", $id)->first();
-    return response()->json($resource);
-}
-//
-//    /**
-//     * Show the form for editing the specified resource.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function edit($id)
-//    {
-//        //
-//    }
-//
-//    /**
-//     * Update the specified resource in storage.
-//     *
-//     * @param  \Illuminate\Http\Request  $request
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-    public function update(Request $request, $id)
-{
-    $input = $request->all();
-    $image = $input["newphoto"];
-    if ($request->newphoto) {
-        $position = strpos($image, ';');
-        $sub = substr($image, 0, $position);
-        $ext = explode('/', $sub)[1];
 
-        $name = time() . "." . $ext;
-        $img = Image::make($image)->resize(240, 200);
-        $upload_path = 'backend/employee/';
-        $image_url = $upload_path . $name;
-        $saveNewImage = $img->save($image_url);
 
-        if ($saveNewImage) {
-            $data['photo'] = $image_url;
-            $img = DB::table('suppliers')->where("id",$id)->first();
-            $image_path = $img->photo;
-            $done =unlink($image_path);
-            if($img){
-                unset($input["newphoto"]);
-                $input["photo"] = $image_url;
-                DB::table('Suppliers')->where("id",$id)->update($input);
+    public function update($id, Request $request): JsonResponse
+    {
+        $data = $request->validate($this->service->model()::updateRules($id), $this->service->model()::errorMessages());
+        $photo_source = $data["newphoto"];
+        if ($photo_source ) {
+            $position = strpos($photo_source, ';');
+            $sub = substr($photo_source, 0, $position);
+            $ext = explode('/', $sub)[1];
+
+            $name = time() . "." . $ext;
+            $img = Image::make($photo_source)->resize(240, 200);
+            $upload_path = 'backend/employee/';
+            $image_url = $upload_path . $name;
+            $saveNewImage = $img->save($image_url);
+
+            if ($saveNewImage) {
+                $data['photo'] = $image_url;
+                $img = DB::table('suppliers')->where("id",$id)->first();
+                $image_path = $img->photo;
+                unlink($image_path);
+                if($img){
+                    unset($photo_source);
+                    $input["photo"] = $image_url;
+//                    DB::table('Suppliers')->where("id",$id)->update($input);
+                    $resource = $this->service->update($id, $data);
+
+                }
+            }else{
+                $oldPhoto= $data['photo'];
+                $data["photo"] =$oldPhoto;
+                unset($data["newphoto"]);
+                $resource = $this->service->update($id, $data);
+
+//                $supplier = DB::table('suppliers')->where("id",$id)
+//                    ->update($input);
             }
-        }else{
-            $oldPhoto= $request->photo;
-            $data["photo"] =$oldPhoto;
-            unset($input["newphoto"]);
-            $supplier = DB::table('suppliers')->where("id",$id)
-                ->update($input);
         }
-    }
-    $data["photo"] = $image_url;
-    $supplier = Supplier::create($data);
 
-}
+        if (!$resource) {
+            return response()->json(['message' => 'resource not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json($resource);
+    }
+
 //
 //    /**
 //     * Remove the specified resource from storage.
@@ -134,15 +116,31 @@ class SupplierController extends Controller{
 //     * @param  int  $id
 //     * @return \Illuminate\Http\Response
 //     */
-    public function destroy($id)
-{
-    $resource = Supplier::where("id", $id)->first();
-    $photo = $resource->photo;
-    if ($photo) {
-        unlink($photo);
-        DB::table("suppliers")->where("id", $id)->delete();
-    } else {
-        DB::table("suppliers")->where("id", $id)->delete();
+//    public function destroy($id)
+//{
+//    $resource = Supplier::where("id", $id)->first();
+//    $photo = $resource->photo;
+//    if ($photo) {
+//        unlink($photo);
+//        DB::table("suppliers")->where("id", $id)->delete();
+//    } else {
+//        DB::table("suppliers")->where("id", $id)->delete();
+//    }
+//}
+
+    public function destroy($id): JsonResponse
+    {
+        $resource = Supplier::where("id", $id)->first();
+        $photo = $resource->photo;
+        if($photo){
+            unlink($photo);
+        }
+
+        $deleted = $this->service->delete($id);
+        if (!$deleted) {
+            return response()->json(['message' => 'resource not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
-}
 }

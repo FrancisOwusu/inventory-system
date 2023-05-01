@@ -79,7 +79,8 @@
             allCategories() {
                 axios
                     .get("/api/categories")
-                    .then(({data}) => (this.categories = data))
+                    .then(({data}) => (
+                        this.categories = data))
                     .catch((error) => {
                         this.errors = error.response.data.errors
                     })

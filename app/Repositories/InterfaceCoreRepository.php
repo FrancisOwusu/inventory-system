@@ -9,7 +9,7 @@
 namespace App\Repositories;
 
 
-interface ICoreRepository
+interface InterfaceCoreRepository
 {
 
     public function findAll();

@@ -9,7 +9,14 @@
 namespace App\Repositories;
 
 
-class CategoryRepository
+use App\Models\Category;
+
+class CategoryRepository extends CoreRepository
 {
+    public function __construct()
+    {
+        parent::__construct(Category::class);
+    }
+
 
 }

@@ -9,7 +9,12 @@
 namespace App\Services;
 
 
-class CategoryService
-{
+use App\Repositories\InterfaceCoreRepository;
 
+class CategoryService extends CoreService
+{
+    public function __construct(InterfaceCoreRepository $repository)
+    {
+        parent::__construct($repository);
+    }
 }

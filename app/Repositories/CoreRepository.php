@@ -9,42 +9,40 @@
 namespace App\Repositories;
 
 
-use App\Services\ICoreService;
-
-class CoreRepository implements ICoreService
+class CoreRepository implements InterfaceCoreRepository
 {
-    protected $repository;
+    protected $model;
 
-    public function __construct(ICoreRepository $repository)
+    public function __construct($model)
     {
-        $this->repository = $this->repository;
+        $this->model = $model;
     }
 
     public function findAll()
     {
         // TODO: Implement findAll() method.
-        $this->repository->allAll();
+      return  $this->model::all();
     }
 
     /**
      * @param $id
      */
-    public function find($id): Builder
+    public function find($id)
     {
         // TODO: Implement find() method.
-        return $this->repository->find($id);
+        return $this->model::find($id);
     }
 
     public function store(array $data)
     {
         // TODO: Implement store() method.
-       return $this->repository->store($data);
+       return $this->model::create($data);
     }
 
     public function update($id, array $data)
     {
         // TODO: Implement update() method.
-        $resource = $this->repository->find($id);
+        $resource = $this->model::find($id);
         if($resource){
             $resource->update($data);
         }
@@ -54,7 +52,7 @@ class CoreRepository implements ICoreService
     public function delete($id, $data=null): bool
     {
         // TODO: Implement delete() method.
-        $resource = $this->model->find($id);
+        $resource = $this->model::find($id);
         if(!$resource){
             return false;
         }

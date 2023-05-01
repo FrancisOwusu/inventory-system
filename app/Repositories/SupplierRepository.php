@@ -9,7 +9,12 @@
 namespace App\Repositories;
 
 
-class SupplierRepository
-{
+use App\Models\Supplier;
 
+class SupplierRepository extends CoreRepository
+{
+    public function __construct()
+    {
+        parent::__construct(Supplier::class);
+    }
 }

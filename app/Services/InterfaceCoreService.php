@@ -9,7 +9,7 @@
 namespace App\Services;
 
 
-interface ICoreService
+interface InterfaceCoreService
 {
     public function findAll();
 

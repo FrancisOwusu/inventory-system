@@ -3,7 +3,7 @@
         <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">DataTables</h1>
+                <h1 class="h3 mb-0 text-gray-800">Suppliers</h1>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="./">Home</a></li>
                     <li class="breadcrumb-item">Tables</li>
@@ -36,15 +36,15 @@
                                 </thead>
                                 <tbody>
 
-                                <tr v-for="employee in filterSearch" :key="employee.id">
-                                    <td>{{employee.name}}</td>
-                                    <td><img :src="employee.photo"/></td>
-                                    <td>{{employee.salary}}</td>
-                                    <td>{{employee.email}}</td>
-                                    <td>{{employee.phone}}</td>
+                                <tr v-for="supplier in filterSearch" :key="supplier.id">
+                                    <td>{{supplier.name}}</td>
+                                    <td><img :src="supplier.photo"/></td>
+                                    <td>{{supplier.shopname}}</td>
+                                    <td>{{supplier.email}}</td>
+                                    <td>{{supplier.phone}}</td>
                                     <td>
-                                        <router-link :to="{name:'edit-employee', params:{id:employee.id}}" class="btn btn-sm btn-primary">Edit</router-link>
-                                        <button @click="deleteEmployee(employee.id)" class="btn btn-sm btn-danger">
+                                        <router-link :to="{name:'edit-supplier', params:{id:supplier.id}}" class="btn btn-sm btn-primary">Edit</router-link>
+                                        <button @click="deleteSupplier(supplier.id)" class="btn btn-sm btn-danger">
                                             Delete
                                         </button>
                                     </td>
@@ -68,32 +68,32 @@
             if (!User.loggedIn()) {
                 this.$router.push({name: '/'});
             }
-            this.allEmployees();
+            this.allSuppliers();
         },
         data() {
             return {
-                employees: [],
+                suppliers: [],
                 searchTerm: ''
             };
         },
         computed: {
             filterSearch() {
-                return this.employees.filter(employee => {
-                    return employee.phone.match(this.searchTerm);
+                return this.suppliers.filter(supplier => {
+                    return supplier.phone.match(this.searchTerm);
                 })
             }
 
         },
         methods: {
-            allEmployees() {
+            allSuppliers() {
                 axios
-                    .get("/api/employee", this.form)
-                    .then(({data}) => (this.employees = data))
+                    .get("/api/supplier", this.form)
+                    .then(({data}) => (this.suppliers = data))
                     .catch((error) => {
                         this.errors = error.response.data.errors
                     })
             },
-            deleteEmployee(id) {
+            deleteSupplier(id) {
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -105,16 +105,16 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         axios
-                            .delete("/api/employee/" + id)
+                            .delete("/api/supplier/" + id)
                             .then(() => {
-                                this.employees = this.employees.filter(
-                                    employee => {
-                                        return employee.id != id;
+                                this.suppliers = this.suppliers.filter(
+                                    supplier => {
+                                        return supplier.id != id;
                                     }
                                 )
                             })
                             .catch(() => {
-                                this.$router.push('/employees')
+                                this.$router.push('/suppliers')
                             })
                         Swal.fire(
                             'Deleted!',

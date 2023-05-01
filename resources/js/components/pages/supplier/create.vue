@@ -28,9 +28,7 @@
                                         <input type="email" class="form-control" v-model="form.email"
                                                id="exampleInputEmail1" aria-describedby="emailHelp"
                                                placeholder="Enter email">
-                                        <!--<small id="emailHelp" class="form-text text-muted">We'll never share your-->
-                                        <!--email with anyone else.</small>-->
-                                        <span class="text-danger" v-if="errors.name">{{errors.name[0]}}</span>
+                                      <span class="text-danger" v-if="errors.email">{{errors.email[0]}}</span>
 
                                     </div>
                                 </div>
@@ -48,33 +46,53 @@
                                     </div>
                                 </div>
                             </div>
-
+<div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <div class="custom-file">
-                                            <input type="file"
-                                                   accept="image/*"
-                                                   ref="file"
-                                                   class="custom-file-input"
-                                                   @change="onFileSelected" id="customFile">
-                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Phone</label>
+                                            <input type="text" class="form-control" v-model="form.phone"
+
+                                                   placeholder="Enter phone">
+                                            <!--<small id="emailHelp" class="form-text text-muted">We'll never share your-->
+                                            <!--email with anyone else.</small>-->
+                                            <span class="text-danger" v-if="errors.phone">{{errors.phone[0]}}</span>
                                         </div>
-                                        <span class="text-danger" v-if="errors.photo">{{errors.photo[0]}}</span>
+
+
                                     </div>
 
-                                    <div class="form-group">
-                                        <img :src="form.photo" style="height:40px;width: 40px"/>
-                                        <span class="text-danger" v-if="errors.photo">{{errors.photo[0]}}</span>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="custom-file">
+                                                <input type="file"
+                                                       accept="image/*"
+                                                       ref="file"
+                                                       class="custom-file-input"
+                                                       @change="onFileSelected" id="customFile">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                            <span class="text-danger" v-if="errors.photo">{{errors.photo[0]}}</span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <img :src="form.photo" style="height:40px;width: 40px"/>
+                                            <span class="text-danger" v-if="errors.photo">{{errors.photo[0]}}</span>
+                                        </div>
                                     </div>
+
+
+
+
                                 </div>
-                            </div>
+
                             <div class="form-group">
                                 <label>Address</label>
                                 <textarea v-model="form.address"></textarea>
                                 <span class="text-danger" v-if="errors.address">{{errors.address[0]}}</span>
 
                             </div>
-
+</div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -105,13 +123,11 @@
             return {
                 form: {
                     name: null,
-                    salary: null,
+                    shopname: null,
                     email: null,
                     phone: null,
-                    nid: null,
                     address: null,
-                    photo: null,
-                    date_joining: null
+                    photo: null
                 },
                 errors: {}
             };
@@ -132,20 +148,8 @@
                     .catch((error) => {
                         this.errors = error.response.data.errors
                     })
-                //     .catch(
-                //     Toast.fire({
-                //         icon: 'warning',
-                //         title: 'Invalid Email or Password'
-                //     })
-                // );
-                // .finally(() => (this.loading = false));
             },
-            // reverseMessage() {
-            //   this.message = this.message.split('').reverse().join('')
-            // },
-            // notify() {
-            //   alert('navigation was prevented.')
-            // }
+
             onFileSelected(event) {
                 let file = event.target.files[0];
                 if (file > 1048770) {

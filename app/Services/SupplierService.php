@@ -9,36 +9,12 @@
 namespace App\Services;
 
 
-class SupplierService implements ICoreService
+use App\Repositories\InterfaceCoreRepository;
+
+class SupplierService extends CoreService
 {
-
-    public function findAll()
-    {
-        // TODO: Implement findAll() method.
-    }
-
-    public function find($id)
-    {
-        // TODO: Implement find() method.
-    }
-
-    public function store(array $data)
-    {
-        // TODO: Implement store() method.
-    }
-
-    public function update($id, array $data)
-    {
-        // TODO: Implement update() method.
-    }
-
-    public function delete($id, $data = null)
-    {
-        // TODO: Implement delete() method.
-    }
-
-    public function model()
-    {
-        // TODO: Implement model() method.
-    }
+public function __construct(InterfaceCoreRepository $repository)
+{
+    parent::__construct($repository);
+}
 }
