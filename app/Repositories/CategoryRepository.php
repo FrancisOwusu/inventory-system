@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: HP
- * Date: 4/27/2023
- * Time: 6:09 AM
+ * Date: 4/23/2023
+ * Time: 12:34 PM
  */
 
 namespace App\Repositories;
 
 
-class SupplierRepository
+class CategoryRepository
 {
 
 }

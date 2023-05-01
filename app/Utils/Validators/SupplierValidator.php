@@ -3,13 +3,13 @@
  * Created by PhpStorm.
  * User: HP
  * Date: 4/27/2023
- * Time: 6:09 AM
+ * Time: 5:17 AM
  */
 
-namespace App\Repositories;
+namespace App\Utils\Validators;
 
 
-class SupplierRepository
+trait SupplierValidator
 {
 
 }
