@@ -3,72 +3,50 @@
  * Created by PhpStorm.
  * User: HP
  * Date: 4/23/2023
- * Time: 7:54 PM
+ * Time: 7:54 PM.
  */
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Category;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
 
 class ExController
-
-//    Controller
 {
-//    protected $repo;
-//    public function __construct(CategoryRepository $repo)
-//    {
-//        $this->repo = $repo;
-//    }
-
-    public function index()
+    public function index() : Response
     {
-        //
-//        if (!empty($this->model)) {
         $saveModel = $this->repo->findAll();
-//            $saveModel = Category::all();
-//        }
         return response()->json($saveModel);
     }
-//
-//    /**
-//     * Show the form for creating a new resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function create()
-//    {
-//        //
-//    }
-//
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): Category
     {
         $validated = $request->validate([
             'name' => 'required',
-//            'email' => 'required',
-////            'salary' => 'required',
-//            'phone' => 'required',
+            //            'email' => 'required',
+            // //            'salary' => 'required',
+            //            'phone' => 'required',
         ]);
 
         return Category::create($request->all());
-
     }
-//
-//    /**
-//     * Display the specified resource.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-    public function show($id)
+
+
+    public function show($id): JsonResource
     {
-        $resource = Category::where("id", $id)->first();
+        $resource = Category::where('id', $id)->first();
+
         return response()->json($resource);
     }
+
 //
 //    /**
 //     * Show the form for editing the specified resource.
@@ -88,15 +66,16 @@ class ExController
 //     * @param  int  $id
 //     * @return \Illuminate\Http\Response
 //     */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): bool
     {
         $input = $request->all();
-        $record = Category::where("id", $id)->first();
+        $record = Category::where('id', $id)->first();
         if ($record) {
             $record->update($input);
         }
-
+        return  false;
     }
+
 //
 //    /**
 //     * Remove the specified resource from storage.
@@ -106,11 +85,9 @@ class ExController
 //     */
     public function destroy($id)
     {
-        $resource = Category::where("id", $id)->first();
+        $resource = Category::where('id', $id)->first();
         if ($resource) {
-            Category::where("id", $id)->delete();
+            Category::where('id', $id)->delete();
         }
     }
-
-
 }

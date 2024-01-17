@@ -37,13 +37,15 @@
                                 <tbody>
 
                                 <tr v-for="supplier in filterSearch" :key="supplier.id">
-                                    <td>{{supplier.name}}</td>
+                                    <td>{{ supplier.name }}</td>
                                     <td><img :src="supplier.photo"/></td>
-                                    <td>{{supplier.shopname}}</td>
-                                    <td>{{supplier.email}}</td>
-                                    <td>{{supplier.phone}}</td>
+                                    <td>{{ supplier.shopname }}</td>
+                                    <td>{{ supplier.email }}</td>
+                                    <td>{{ supplier.phone }}</td>
                                     <td>
-                                        <router-link :to="{name:'edit-supplier', params:{id:supplier.id}}" class="btn btn-sm btn-primary">Edit</router-link>
+                                        <router-link :to="{name:'edit-supplier', params:{id:supplier.id}}"
+                                                     class="btn btn-sm btn-primary">Edit
+                                        </router-link>
                                         <button @click="deleteSupplier(supplier.id)" class="btn btn-sm btn-danger">
                                             Delete
                                         </button>
@@ -62,72 +64,72 @@
 </template>
 
 <script>
-    export default {
-        name: "index",
-        created() {
-            if (!User.loggedIn()) {
-                this.$router.push({name: '/'});
-            }
-            this.allSuppliers();
-        },
-        data() {
-            return {
-                suppliers: [],
-                searchTerm: ''
-            };
-        },
-        computed: {
-            filterSearch() {
-                return this.suppliers.filter(supplier => {
-                    return supplier.phone.match(this.searchTerm);
-                })
-            }
-
-        },
-        methods: {
-            allSuppliers() {
-                axios
-                    .get("/api/supplier", this.form)
-                    .then(({data}) => (this.suppliers = data))
-                    .catch((error) => {
-                        this.errors = error.response.data.errors
-                    })
-            },
-            deleteSupplier(id) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        axios
-                            .delete("/api/supplier/" + id)
-                            .then(() => {
-                                this.suppliers = this.suppliers.filter(
-                                    supplier => {
-                                        return supplier.id != id;
-                                    }
-                                )
-                            })
-                            .catch(() => {
-                                this.$router.push('/suppliers')
-                            })
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        )
-                    }
-                })
-
-            }
+export default {
+    name: "index",
+    created() {
+        if (!User.loggedIn()) {
+            this.$router.push({name: '/'});
+        }
+        this.allSuppliers();
+    },
+    data() {
+        return {
+            suppliers: [],
+            searchTerm: ''
+        };
+    },
+    computed: {
+        filterSearch() {
+            return this.suppliers.filter(supplier => {
+                return supplier.phone.match(this.searchTerm);
+            })
         }
 
+    },
+    methods: {
+        allSuppliers() {
+            axios
+                .get(ApiUrl.SUPPLIERS, this.form)
+                .then(({data}) => (this.suppliers = data))
+                .catch((error) => {
+                    this.errors = error.response.data.errors
+                })
+        },
+        deleteSupplier(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios
+                        .delete(ApiUrl.SUPPLIERS + id)
+                        .then(() => {
+                            this.suppliers = this.suppliers.filter(
+                                supplier => {
+                                    return supplier.id != id;
+                                }
+                            )
+                        })
+                        .catch(() => {
+                            this.$router.push('/suppliers')
+                        })
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                }
+            })
+
+        }
     }
+
+}
 </script>
 
 <style scoped>

@@ -3,13 +3,12 @@
  * Created by PhpStorm.
  * User: HP
  * Date: 4/15/2023
- * Time: 10:57 PM
+ * Time: 10:57 PM.
  */
 
 namespace App\Repositories;
 
-
-class CoreRepository implements InterfaceCoreRepository
+class CoreRepository implements ICoreRepository
 {
     protected $model;
 
@@ -20,51 +19,42 @@ class CoreRepository implements InterfaceCoreRepository
 
     public function findAll()
     {
-        // TODO: Implement findAll() method.
-      return  $this->model::all();
+       return $this->model::all();
     }
 
-    /**
-     * @param $id
-     */
     public function find($id)
     {
-        // TODO: Implement find() method.
         return $this->model::find($id);
     }
 
     public function store(array $data)
     {
-        // TODO: Implement store() method.
-       return $this->model::create($data);
+            return $this->model::create($data);
     }
 
     public function update($id, array $data)
     {
-        // TODO: Implement update() method.
         $resource = $this->model::find($id);
-        if($resource){
+        if ($resource) {
             $resource->update($data);
         }
+
         return $resource->refresh();
     }
 
-    public function delete($id, $data=null): bool
+    public function delete($id, $data = null): bool
     {
-        // TODO: Implement delete() method.
         $resource = $this->model::find($id);
-        if(!$resource){
+        if (!$resource) {
             return false;
         }
         $resource->delete();
+
         return true;
     }
 
     public function model()
     {
-        // TODO: Implement model() method.
         return $this->model;
     }
-
-
 }

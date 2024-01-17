@@ -20,6 +20,7 @@
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\CategoryController;
+use \App\Http\Controllers\ProductController;
 Route::group([
 
     'middleware' => 'api',
@@ -36,8 +37,11 @@ Route::group([
     Route::post('me', 'AuthController@me');
 
 });
+Route::middleware(['api'])->group(function () {
+    Route::resource('employee',EmployeeController::class);
+    Route::resource('supplier',SupplierController::class);
+    Route::resource('categories',CategoryController::class);
+    Route::resource('products',ProductController::class);
+});
 
 
-Route::resource('employee',EmployeeController::class);
-Route::resource('supplier',SupplierController::class);
-Route::resource('categories',CategoryController::class);

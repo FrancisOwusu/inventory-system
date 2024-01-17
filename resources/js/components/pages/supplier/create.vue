@@ -12,13 +12,13 @@
                             <div class="form-group">
                                 <label>Name</label>
                                 <input
-                                        type="text"
-                                        v-model="form.name"
-                                        class="form-control"
-                                        id="exampleInputFirstName"
-                                        placeholder="Enter Name"
+                                    type="text"
+                                    v-model="form.name"
+                                    class="form-control"
+                                    id="exampleInputFirstName"
+                                    placeholder="Enter Name"
                                 />
-                                <span class="text-danger" v-if="errors.name">{{errors.name[0]}}</span>
+                                <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
 
                             </div>
                             <div class="row">
@@ -28,7 +28,7 @@
                                         <input type="email" class="form-control" v-model="form.email"
                                                id="exampleInputEmail1" aria-describedby="emailHelp"
                                                placeholder="Enter email">
-                                      <span class="text-danger" v-if="errors.email">{{errors.email[0]}}</span>
+                                        <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
 
                                     </div>
                                 </div>
@@ -36,17 +36,17 @@
                                     <div class="form-group">
                                         <label>Shop Name</label>
                                         <input
-                                                type="text"
-                                                v-model="form.shopname"
-                                                class="form-control"
-                                                placeholder="Enter Shopname"
+                                            type="text"
+                                            v-model="form.shopname"
+                                            class="form-control"
+                                            placeholder="Enter Shopname"
                                         />
-                                        <span class="text-danger" v-if="errors.shopname">{{errors.shopname[0]}}</span>
+                                        <span class="text-danger" v-if="errors.shopname">{{ errors.shopname[0] }}</span>
 
                                     </div>
                                 </div>
                             </div>
-<div class="row">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -56,7 +56,7 @@
                                                    placeholder="Enter phone">
                                             <!--<small id="emailHelp" class="form-text text-muted">We'll never share your-->
                                             <!--email with anyone else.</small>-->
-                                            <span class="text-danger" v-if="errors.phone">{{errors.phone[0]}}</span>
+                                            <span class="text-danger" v-if="errors.phone">{{ errors.phone[0] }}</span>
                                         </div>
 
 
@@ -72,27 +72,25 @@
                                                        @change="onFileSelected" id="customFile">
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>
-                                            <span class="text-danger" v-if="errors.photo">{{errors.photo[0]}}</span>
+                                            <span class="text-danger" v-if="errors.photo">{{ errors.photo[0] }}</span>
                                         </div>
 
                                         <div class="form-group">
-                                            <img :src="form.photo" style="height:40px;width: 40px"/>
-                                            <span class="text-danger" v-if="errors.photo">{{errors.photo[0]}}</span>
+                                            <img :src="form.photo" alt="Image" style="height:40px;width: 40px"/>
+                                            <span class="text-danger" v-if="errors.photo">{{ errors.photo[0] }}</span>
                                         </div>
                                     </div>
 
 
-
-
                                 </div>
 
-                            <div class="form-group">
-                                <label>Address</label>
-                                <textarea v-model="form.address"></textarea>
-                                <span class="text-danger" v-if="errors.address">{{errors.address[0]}}</span>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea v-model="form.address"></textarea>
+                                    <span class="text-danger" v-if="errors.address">{{ errors.address[0] }}</span>
 
+                                </div>
                             </div>
-</div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -112,62 +110,72 @@
 </template>
 
 <script>
-    export default {
-        name: "create",
-        created() {
-            if (!User.loggedIn()) {
-                this.$router.push({name:'/'});
-            }
-        },
-        data() {
-            return {
-                form: {
-                    name: null,
-                    shopname: null,
-                    email: null,
-                    phone: null,
-                    address: null,
-                    photo: null
-                },
-                errors: {}
-            };
-        },
-
-        methods: {
-            supplierInsert() {
-                axios
-                    .post("/api/supplier", this.form)
-                    .then((response) => {
-                   this.$router.push({name:"supplier"})
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Supplier created successfully'
-                        })
-
-                    })
-                    .catch((error) => {
-                        this.errors = error.response.data.errors
-                    })
+export default {
+    name: "suppliers",
+    created() {
+        if (!User.loggedIn()) {
+            this.$router.push({name: '/'});
+        }
+    },
+    data() {
+        return {
+            form: {
+                name: null,
+                shopname: null,
+                email: null,
+                phone: null,
+                address: null,
+                photo: null
             },
+            errors: {}
+        };
+    },
 
-            onFileSelected(event) {
-                let file = event.target.files[0];
-                if (file > 1048770) {
+    methods: {
+        supplierInsert() {
+            axios
+                .post(ApiUrl.SUPPLIERS, this.form)
+                .then((response) => {
+                    console.log(response);
                     Toast.fire({
-                        icon: 'error',
-                        title: 'File Is more than 1MB'
+                        icon: 'success',
+                        title: 'Supplier created successfully'
                     })
-
-                } else {
-                    let reader = new FileReader();
-                    reader.onload = event => {
-                        this.form.photo = event.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
+                    this.$router.push({name: "supplier"})
+                })
+                .catch((error) => {
+                    this.errors = error.response
+                })
         },
-    }
+
+        onFileSelected(event) {
+            let file = event.target.files[0];
+            if (!file) {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Please select a file'
+
+                });
+                return;
+            }
+            if (file > 1048770) {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'File Is more than 1MB'
+                })
+                return false;
+            } else {
+                let reader = new FileReader();
+                reader.onload = event => {
+                    this.form.photo = event.target.result;
+                    console.log(event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+    },
+}
 </script>
 
 <style scoped>

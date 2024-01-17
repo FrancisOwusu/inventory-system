@@ -1,0 +1,15 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 4
+    paths:
+        - app
+    ignoreErrors:
+        - '#Call to an undefined method Faker\\Generator::secondaryAddress\(\).#'
+        - '#Call to an undefined method Faker\\Generator::randomEnumValue\(\).#'
+        - '#PHPDoc type array of property GettOnline\\Borealis\\Core\\Providers\\EventServiceProvider::\$listen is not covariant with PHPDoc type array<string, array<int, string>> of overridden property Illuminate\\Foundation\\Support\\Providers\\EventServiceProvider::\$listen.#'
+    tmpDir: build/phpstan
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
+    treatPhpDocTypesAsCertain: false

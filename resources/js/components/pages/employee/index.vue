@@ -87,7 +87,7 @@
         methods: {
             allEmployees() {
                 axios
-                    .get("/api/employee", this.form)
+                    .get(ApiUrl.EMPLOYEES, this.form)
                     .then(({data}) => (this.employees = data))
                     .catch((error) => {
                         this.errors = error.response.data.errors
@@ -105,7 +105,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         axios
-                            .delete("/api/employee/" + id)
+                            .delete(ApiUrl.EMPLOYEES+ "/" + id)
                             .then(() => {
                                 this.employees = this.employees.filter(
                                     employee => {

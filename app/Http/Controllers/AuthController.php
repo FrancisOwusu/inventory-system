@@ -12,18 +12,14 @@ class AuthController extends Controller
 {
     /**
      * Create a new AuthController instance.
-     *
-     * @return void
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','signup']]);
+        $this->middleware('auth:api', ['except' => ['login', 'signup']]);
     }
 
     /**
      * Get a JWT token via given credentials.
-     *
-     * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -31,7 +27,7 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
         $credentials = $request->only('email', 'password');
 
@@ -43,7 +39,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User
+     * Get the authenticated User.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -53,7 +49,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Log the user out (Invalidate the token)
+     * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -75,23 +71,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60,
-            'user'=>Auth::user()
-        ]);
-    }
-
-    /**
      * Get the guard to be used during authentication.
      *
      * @return \Illuminate\Contracts\Auth\Guard
@@ -106,17 +85,35 @@ class AuthController extends Controller
         $validated = $request->validate([
             'email' => 'required|unique:users|max:255',
             'firstname' => 'required',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
         ]);
         $password = $request->input('password');
-        $data = array();
-        $data["phone"] = $request->input('phone');
-        $data["username"] = $request->input('firstname');
-        $data["firstname"] = $request->input('firstname');
-        $data["lastname"] = $request->input('lastname');
-        $data["email"] = $request->input('email');
-        $data["password"] = Hash::make($password);
-        $user = DB::table("users")->insert($data);
+        $data = [];
+        $data['phone'] = $request->input('phone');
+        $data['username'] = $request->input('firstname');
+        $data['firstname'] = $request->input('firstname');
+        $data['lastname'] = $request->input('lastname');
+        $data['email'] = $request->input('email');
+        $data['password'] = Hash::make($password);
+        $user = DB::table('users')->insert($data);
+
         return $this->login($request);
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => $this->guard()->factory()->getTTL() * 60,
+            'user' => Auth::user(),
+        ]);
     }
 }

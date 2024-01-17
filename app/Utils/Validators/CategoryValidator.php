@@ -3,11 +3,11 @@
  * Created by PhpStorm.
  * User: HP
  * Date: 4/24/2023
- * Time: 1:22 PM
+ * Time: 1:22 PM.
  */
 
 namespace App\Utils\Validators;
-use Illuminate\Support\Facades\Validator;
+
 use Illuminate\Validation\Rule;
 
 trait CategoryValidator
@@ -21,34 +21,31 @@ trait CategoryValidator
     {
         return [
             'name' => [
-                'required','string'
-//                Rule::unique('categories')->ignore($user->id),
-            ]
+                'required', 'string',
+                //                Rule::unique('categories')->ignore($user->id),
+            ],
         ];
     }
 
-
-    public static function updateRules($id):array
+    public static function updateRules($id): array
     {
         return [
             'name' => [
-                'required','string',
+                'required', 'string',
                 Rule::unique('categories'),
-                ]
-            ];
+            ],
+        ];
 
-//                'required|unique:categories|max:255',
-//            'body' => 'required',
-//        ];
+        //                'required|unique:categories|max:255',
+        //            'body' => 'required',
+        //        ];
     }
 
     public static function errorMessages(): array
     {
         return [
-
         ];
     }
-
 
     /*public static function errorMessages(): array
     {
