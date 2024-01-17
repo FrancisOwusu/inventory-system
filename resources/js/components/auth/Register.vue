@@ -44,6 +44,19 @@
                                                 placeholder="Enter Email Address"
                                             />
                                         </div>
+                                        <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Phone</label>
+                                        <input type="text" class="form-control" v-model="form.phone"
+
+                                               placeholder="Enter phone">
+                                        <!--<small id="emailHelp" class="form-text text-muted">We'll never share your-->
+                                        <!--email with anyone else.</small>-->
+                                        <span class="text-danger" v-if="errors.phone">{{errors.phone[0]}}</span>
+                                    </div>
+
+
+                                </div>
                                         <div class="form-group">
                                             <label>Password</label>
                                             <input
@@ -98,9 +111,9 @@
 export default {
     name: "Register",
     created() {
-        if (!User.loggedIn()) {
-            this.$router.push({name:'/'});
-        }
+        // if (!User.loggedIn()) {
+        //     this.$router.push({name:'/'});
+        // }
     },
     data(){
         return {
@@ -109,6 +122,7 @@ export default {
                 password: null,
                 firstname:null,
                 lastname:null,
+                phone:null,
                 password_confirmation:null
             },
             errors:{
@@ -125,7 +139,7 @@ export default {
                     User.responseAfterLogin(response);
                     Toast.fire({
                         icon: 'success',
-                        title: 'Signed in successfully'
+                        title: 'Sign Up is successfully'
                     })
 
                     // if(authenticated){

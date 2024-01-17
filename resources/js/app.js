@@ -1,12 +1,14 @@
 // require('./bootstrap');
 import './bootstrap';
-import { createApp } from "vue/dist/vue.esm-bundler";
+import {createApp} from "vue/dist/vue.esm-bundler";
 import router from './routes';
 import Notification from './Helpers/Notification'
 // import { createApp } from 'vue'
 import App from './App.vue'
 import Swal from 'sweetalert2';
-
+import User from './Helpers/User'
+import AuthService from './Helpers/AuthService'
+import ApiUrl from './Helpers/ApiUrl'
 window.Swal = Swal;
 const Toast = Swal.mixin({
     toast: true,
@@ -24,8 +26,8 @@ window.Toast = Toast;
 //make notification global
 window.Notification = Notification;
 //import user
-import User from './Helpers/User'
-import AuthService from './Helpers/AuthService'
+
+window.ApiUrl= ApiUrl;
 const app = createApp({
     // components:{
     //     AppComponent
@@ -33,7 +35,7 @@ const app = createApp({
 });
 //make user global
 window.User = User;
-window.Auth =AuthService;
+window.Auth = AuthService;
 
 app.use(router);
 //

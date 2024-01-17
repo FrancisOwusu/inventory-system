@@ -3,14 +3,13 @@
  * Created by PhpStorm.
  * User: HP
  * Date: 4/15/2023
- * Time: 11:52 PM
+ * Time: 11:52 PM.
  */
 
 namespace App\Http\Controllers\Api;
 
-
 use App\Http\Controllers\Controller;
-use App\Services\InterfaceCoreService;
+use App\Services\ICoreService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,12 +18,12 @@ abstract class CoreController extends Controller
 {
     protected $service;
 
-    public function __construct(InterfaceCoreService $service)
+    public function __construct(ICoreService $service)
     {
         $this->service = $service;
     }
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         return response()->json($this->service->findAll());
     }
@@ -32,9 +31,8 @@ abstract class CoreController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate($this->service->model()::storeRules(), $this->service->model()::errorMessages());
-
         return response()->json(
-            [$this->service->store($data)
+            [$this->service->store($data),
             ],
             Response::HTTP_CREATED
         );
@@ -64,7 +62,7 @@ abstract class CoreController extends Controller
 
     public function update($id, Request $request): JsonResponse
     {
-//        $data=$request->all();
+        //        $data=$request->all();
 
         $data = $request->validate($this->service->model()::updateRules($id), $this->service->model()::errorMessages());
 

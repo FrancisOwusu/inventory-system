@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    use HasFactory,CategoryValidator;
-    protected $guarded =['id'];
+    use HasFactory;
+    use CategoryValidator;
+    protected $guarded = ['id'];
 }

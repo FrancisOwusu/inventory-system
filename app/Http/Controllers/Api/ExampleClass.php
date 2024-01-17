@@ -3,18 +3,17 @@
  * Created by PhpStorm.
  * User: HP
  * Date: 4/23/2023
- * Time: 4:03 PM
+ * Time: 4:03 PM.
  */
 
 namespace App\Http\Controllers\Api;
-
 
 class ExampleClass
 {
     public function index(): JsonResponse
     {
         return response()->json([
-            'data' => $this->orderRepository->getAllOrders()
+            'data' => $this->orderRepository->getAllOrders(),
         ]);
     }
 
@@ -22,12 +21,12 @@ class ExampleClass
     {
         $orderDetails = $request->only([
             'client',
-            'details'
+            'details',
         ]);
 
         return response()->json(
             [
-                'data' => $this->orderRepository->createOrder($orderDetails)
+                'data' => $this->orderRepository->createOrder($orderDetails),
             ],
             Response::HTTP_CREATED
         );
@@ -38,7 +37,7 @@ class ExampleClass
         $orderId = $request->route('id');
 
         return response()->json([
-            'data' => $this->orderRepository->getOrderById($orderId)
+            'data' => $this->orderRepository->getOrderById($orderId),
         ]);
     }
 
@@ -47,11 +46,11 @@ class ExampleClass
         $orderId = $request->route('id');
         $orderDetails = $request->only([
             'client',
-            'details'
+            'details',
         ]);
 
         return response()->json([
-            'data' => $this->orderRepository->updateOrder($orderId, $orderDetails)
+            'data' => $this->orderRepository->updateOrder($orderId, $orderDetails),
         ]);
     }
 

@@ -12,13 +12,13 @@
                             <div class="form-group">
                                 <label>Name</label>
                                 <input
-                                        type="text"
-                                        v-model="form.name"
-                                        class="form-control"
-                                        id="exampleInputFirstName"
-                                        placeholder="Enter Name"
+                                    type="text"
+                                    v-model="form.name"
+                                    class="form-control"
+                                    id="exampleInputFirstName"
+                                    placeholder="Enter Name"
                                 />
-                                <span class="text-danger" v-if="errors.name">{{errors.name[0]}}</span>
+                                <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
 
                             </div>
                             <div class="row">
@@ -30,7 +30,7 @@
                                                placeholder="Enter email">
                                         <!--<small id="emailHelp" class="form-text text-muted">We'll never share your-->
                                         <!--email with anyone else.</small>-->
-                                        <span class="text-danger" v-if="errors.name">{{errors.name[0]}}</span>
+                                        <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
 
                                     </div>
                                 </div>
@@ -38,12 +38,12 @@
                                     <div class="form-group">
                                         <label>Salary</label>
                                         <input
-                                                type="text"
-                                                v-model="form.salary"
-                                                class="form-control"
-                                                placeholder="Enter Salary"
+                                            type="text"
+                                            v-model="form.salary"
+                                            class="form-control"
+                                            placeholder="Enter Salary"
                                         />
-                                        <span class="text-danger" v-if="errors.salary">{{errors.salary[0]}}</span>
+                                        <span class="text-danger" v-if="errors.salary">{{ errors.salary[0] }}</span>
 
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                                                placeholder="Enter phone">
                                         <!--<small id="emailHelp" class="form-text text-muted">We'll never share your-->
                                         <!--email with anyone else.</small>-->
-                                        <span class="text-danger" v-if="errors.phone">{{errors.phone[0]}}</span>
+                                        <span class="text-danger" v-if="errors.phone">{{ errors.phone[0] }}</span>
                                     </div>
 
 
@@ -66,12 +66,12 @@
                                     <div class="form-group">
                                         <label>NIB</label>
                                         <input
-                                                type="text"
-                                                v-model="form.nid"
-                                                class="form-control"
-                                                placeholder="Enter NIB"
+                                            type="text"
+                                            v-model="form.nid"
+                                            class="form-control"
+                                            placeholder="Enter NIB"
                                         />
-                                        <span class="text-danger" v-if="errors.nid">{{errors.nid[0]}}</span>
+                                        <span class="text-danger" v-if="errors.nid">{{ errors.nid[0] }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
 
                                         >
                                         <span class="text-danger"
-                                              v-if="errors.date_joining">{{errors.date_joining[0]}}</span>
+                                              v-if="errors.date_joining">{{ errors.date_joining[0] }}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -96,19 +96,19 @@
                                                    @change="onFileSelected" id="customFile">
                                             <label class="custom-file-label" for="customFile">Choose file</label>
                                         </div>
-                                        <span class="text-danger" v-if="errors.photo">{{errors.photo[0]}}</span>
+                                        <span class="text-danger" v-if="errors.photo">{{ errors.photo[0] }}</span>
                                     </div>
 
                                     <div class="form-group">
                                         <img :src="form.photo" style="height:40px;width: 40px"/>
-                                        <span class="text-danger" v-if="errors.photo">{{errors.photo[0]}}</span>
+                                        <span class="text-danger" v-if="errors.photo">{{ errors.photo[0] }}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Address</label>
                                 <textarea v-model="form.address"></textarea>
-                                <span class="text-danger" v-if="errors.address">{{errors.address[0]}}</span>
+                                <span class="text-danger" v-if="errors.address">{{ errors.address[0] }}</span>
 
                             </div>
 
@@ -131,76 +131,66 @@
 </template>
 
 <script>
-    export default {
-        name: "create",
-        created() {
-            if (!User.loggedIn()) {
-                this.$router.push({name:'/'});
-            }
-        },
-        data() {
-            return {
-                form: {
-                    name: null,
-                    salary: null,
-                    email: null,
-                    phone: null,
-                    nid: null,
-                    address: null,
-                    photo: null,
-                    date_joining: null
-                },
-                errors: {}
-            };
-        },
+import Notification from "@/Helpers/Notification";
 
-        methods: {
-            employeeInsert() {
-                axios
-                    .post("/api/employee", this.form)
-                    .then((response) => {
-                   this.$router.push({name:"employees"})
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Signed in successfully'
-                        })
-
-                    })
-                    .catch((error) => {
-                        this.errors = error.response.data.errors
-                    })
-                //     .catch(
-                //     Toast.fire({
-                //         icon: 'warning',
-                //         title: 'Invalid Email or Password'
-                //     })
-                // );
-                // .finally(() => (this.loading = false));
+export default {
+    name: "create",
+    created() {
+        if (!User.loggedIn()) {
+            this.$router.push({name: '/'});
+        }
+    },
+    data() {
+        return {
+            form: {
+                name: null,
+                salary: null,
+                email: null,
+                phone: null,
+                nid: null,
+                address: null,
+                photo: null,
+                date_joining: null
             },
-            // reverseMessage() {
-            //   this.message = this.message.split('').reverse().join('')
-            // },
-            // notify() {
-            //   alert('navigation was prevented.')
-            // }
-            onFileSelected(event) {
-                let file = event.target.files[0];
-                if (file > 1048770) {
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'File Is more than 1MB'
-                    })
+            errors: {}
+        };
+    },
 
-                } else {
-                    let reader = new FileReader();
-                    reader.onload = event => {
-                        this.form.photo = event.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
+    methods: {
+        employeeInsert() {
+            axios
+                .post(ApiUrl.EMPLOYEES, this.form)
+                .then((response) => {
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Employee Created successfully'
+                    })
+                    this.$router.push({name: "employees"})
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors
+                })
         },
-    }
+        onFileSelected(event) {
+            let file = event.target.files[0];
+            if (file > 1048770) {
+                // Notification.image_validation(),
+                Toast.fire({
+                    icon: 'error',
+                    title: 'File Is more than 1MB'
+                })
+
+            } else {
+                let reader = new FileReader();
+                reader.onload = event => {
+                    this.form.photo = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    },
+}
 </script>
 
 <style scoped>

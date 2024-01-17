@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Supplier extends Model
 {
-    use HasFactory,SupplierValidator;
+    use HasFactory;
+    use SupplierValidator;
 
-    protected $guarded =['id'];
+    protected $guarded = ['id'];
 }

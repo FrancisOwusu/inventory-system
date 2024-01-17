@@ -11,8 +11,13 @@ import AllCategory from './components/pages/categories/index.vue'
 import EditCategory from './components/pages/categories/edit.vue'
 
 import StoreSupplier from './components/pages/supplier/create.vue'
-import AllSupplier from './components/pages/supplier/index.vue'
+import AllSuppliers from './components/pages/supplier/index.vue'
 import EditSupplier from './components/pages/supplier/edit.vue'
+
+import StoreProduct from './components/pages/product/create.vue'
+import AllProducts from './components/pages/product/index.vue'
+import EditProduct from './components/pages/product/edit.vue'
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -75,7 +80,7 @@ const router = createRouter({
         {
             path: '/suppliers',
             name: 'suppliers',
-            component: AllSupplier
+            component: AllSuppliers
         },
         {
             path: '/supplier/edit/:id',
@@ -86,6 +91,22 @@ const router = createRouter({
             path: '/store-supplier',
             name: 'store-supplier',
             component: StoreSupplier
+        },
+        //products,
+        {
+            path: '/products',
+            name: 'products',
+            component: AllProducts
+        },
+        {
+            path: '/products/edit/:id',
+            name: 'edit-product',
+            component: EditProduct
+        },
+        {
+            path: '/store-product',
+            name: 'store-product',
+            component: StoreProduct
         }
     ],
 });

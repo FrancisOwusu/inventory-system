@@ -157,7 +157,7 @@
             let id = this.$route.params.id;
 
             axios
-                .get("/api/employee/" +id)
+                .get(ApiUrl.EMPLOYEES+ "/" +id)
                 .then(({data}) => {(this.form = data)
                 console.log(data)}
                 )
@@ -168,7 +168,7 @@
         methods: {
             updateEmployee() {
                 let id = this.$route.params.id;
-                axios.patch("/api/employee/" + id, this.form)
+                axios.patch(ApiUrl.EMPLOYEES + "/" + id, this.form)
                     .then((response) => {
                    this.$router.push({name:"employees"})
                         Toast.fire({
