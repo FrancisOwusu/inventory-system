@@ -20,7 +20,9 @@
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\CategoryController;
-use \App\Http\Controllers\ProductController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ExpenseController;
+
 Route::group([
 
     'middleware' => 'api',
@@ -42,6 +44,7 @@ Route::middleware(['api'])->group(function () {
     Route::resource('supplier',SupplierController::class);
     Route::resource('categories',CategoryController::class);
     Route::resource('products',ProductController::class);
+    Route::resource('expenses',ExpenseController::class);
 });
 
 

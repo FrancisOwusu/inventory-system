@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Image;
+
 class EmployeeController extends CoreController
 {
     public function store(Request $request): JsonResponse
@@ -153,7 +154,7 @@ class EmployeeController extends CoreController
         }
         $data["photo"] = $image_url;
         $employee = Employee::create($data);
-return response()->json();
+        return response()->json();
     }
 }
 // //

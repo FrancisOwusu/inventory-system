@@ -21,7 +21,6 @@ class SupplierController extends CoreController
     {
         $data = $request->validate($this->service->model()::storeRules(), $this->service->model()::errorMessages());
 
-
         $photo_source = $request->photo;
         if ($request->photo && !is_null($request->photo)) {
             $position = strpos($photo_source, ';');
