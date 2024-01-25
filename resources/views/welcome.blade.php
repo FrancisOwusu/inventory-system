@@ -141,21 +141,16 @@
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Tables</h6>
-                            <a class="collapse-item" href="simple-tables.html">Simple Tables</a>
-                            <a class="collapse-item" href="datatables.html">DataTables</a>
+                            <router-link class="collapse-item" to="/store-expenses">Add Expenses</router-link>
+                            <router-link class="collapse-item" to="/expenses">All Expenses</router-link>
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="ui-colors.html">
-                        <i class="fas fa-fw fa-palette"></i>
-                        <span>UI Colors</span>
-                    </a>
-                </li>
-                <hr class="sidebar-divider">
-                <div class="sidebar-heading">
-                    Examples
-                </div>
+
+{{--                <hr class="sidebar-divider">--}}
+{{--                <div class="sidebar-heading">--}}
+{{--                    Examples--}}
+{{--                </div>--}}
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage"
                        aria-expanded="true" aria-controls="collapsePage">
