@@ -45,6 +45,7 @@ Route::middleware(['api'])->group(function () {
     Route::resource('categories',CategoryController::class);
     Route::resource('products',ProductController::class);
     Route::resource('expenses',ExpenseController::class);
+    Route::resource('customers',\App\Http\Controllers\Api\CustomerController::class);
 });
 
 

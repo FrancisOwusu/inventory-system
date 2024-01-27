@@ -24,6 +24,11 @@ import AllExpenses from './components/pages/expenses/index.vue'
 import EditExpenses from './components/pages/expenses/edit.vue'
 
 
+import StoreCustomer from './components/pages/customer/create.vue'
+import AllCustomers from './components/pages/customer/index.vue'
+import EditCustomer from './components/pages/customer/edit.vue'
+
+
 import NotFound from './components/error/NotFound.vue'
 
 const router = createRouter({
@@ -140,6 +145,22 @@ const router = createRouter({
             path: '/store-expenses',
             name: 'store-expenses',
             component: StoreExpenses
+        },
+        //customers
+        {
+            path: '/customers',
+            name: 'customers',
+            component: AllCustomers
+        },
+        {
+            path: '/customers/edit/:id',
+            name: 'edit-customer',
+            component: EditCustomer
+        },
+        {
+            path: '/store-customer',
+            name: 'store-customer',
+            component: StoreCustomer
         },
         {
             path: '/:catchAll(.*)',

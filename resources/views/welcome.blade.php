@@ -88,13 +88,14 @@
                         </div>
                     </div>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
-                       aria-expanded="true" aria-controls="collapseBootstrap">
-                        <i class="far fa-fw fa-window-maximize"></i>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable"
+                       aria-expanded="true" aria-controls="collapseTable">
+                        <i class="fas fa-fw fa-table"></i>
                         <span>Products</span>
                     </a>
-                    <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
+                    <div id="collapseTable" class="collapse" aria-labelledby="headingTable"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <router-link class="collapse-item" to="/store-product">Add Product</router-link>
@@ -104,43 +105,14 @@
                 </li>
 
                 <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
-                aria-expanded="true" aria-controls="collapseBootstrap">
-                <i class="far fa-fw fa-window-maximize"></i>
-                <span>Expenses</span>
-                </a>
-                <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
-                data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                <router-link class="collapse-item" to="/store-expenses">Add Expenses</router-link>
-                <router-link class="collapse-item" to="/expenses">All Expenses</router-link>
-                </div>
-                </div>
-                </li>
-                {{--                <li class="nav-item">--}}
-                {{--                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm"--}}
-                {{--                       aria-expanded="true" aria-controls="collapseForm">--}}
-                {{--                        <i class="fab fa-fw fa-wpforms"></i>--}}
-                {{--                        <span>Products</span>--}}
-                {{--                    </a>--}}
-                {{--                    <div id="collapseForm" class="collapse" aria-labelledby="headingForm"--}}
-                {{--                         data-parent="#accordionSidebar">--}}
-                {{--                        <div class="bg-white py-2 collapse-inner rounded">--}}
-                {{--                            <router-link class="collapse-item" to="/store-product">Add Product</router-link>--}}
-                {{--                            <router-link class="collapse-item" to="/products">All Products</router-link>--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-                {{--                </li>--}}
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable"
-                       aria-expanded="true" aria-controls="collapseTable">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
+                       aria-expanded="true" aria-controls="collapseProduct">
                         <i class="fas fa-fw fa-table"></i>
-                        <span>Tables</span>
+                        <span>Expense</span>
                     </a>
                     <div id="collapseTable" class="collapse" aria-labelledby="headingTable"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Tables</h6>
                             <router-link class="collapse-item" to="/store-expenses">Add Expenses</router-link>
                             <router-link class="collapse-item" to="/expenses">All Expenses</router-link>
                         </div>
@@ -155,16 +127,13 @@
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage"
                        aria-expanded="true" aria-controls="collapsePage">
                         <i class="fas fa-fw fa-columns"></i>
-                        <span>Pages</span>
+                        <span>Customer</span>
                     </a>
                     <div id="collapsePage" class="collapse" aria-labelledby="headingPage"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Example Pages</h6>
-                            <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="404.html">404 Page</a>
-                            <a class="collapse-item" href="blank.html">Blank Page</a>
+                            <router-link class="collapse-item" to="/store-customer">Add Customer</router-link>
+                            <router-link class="collapse-item" to="/customers">All Customers</router-link>
                         </div>
                     </div>
                 </li>

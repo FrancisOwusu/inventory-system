@@ -3,16 +3,19 @@
 namespace App\Providers;
 
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\ExpenseController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Repositories\CategoryRepository;
+use App\Repositories\CustomerRepository;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\ExpenseRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\SupplierRepository;
 use App\Services\CategoryService;
+use App\Services\CustomerService;
 use App\Services\EmployeeService;
 use App\Services\ExpenseService;
 use App\Services\ICoreService;
@@ -66,6 +69,11 @@ class AppServiceProvider extends ServiceProvider
             ->needs(ICoreService::class)
             ->give(function ($app) {
                 return new ExpenseService($app->make(ExpenseRepository::class));
+            });
+        $this->app->when(CustomerController::class)
+            ->needs(ICoreService::class)
+            ->give(function ($app) {
+                return new CustomerService($app->make(CustomerRepository::class));
             });
     }
 

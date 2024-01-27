@@ -11,6 +11,7 @@ class ApiUrl {
     static CATEGORIES = `${ApiUrl.BASE_URL}categories`;
     static PRODUCTS = `${ApiUrl.BASE_URL}products`;
     static EXPENSES = `${ApiUrl.BASE_URL}expenses`;
+    static CUSTOMERS = `${ApiUrl.BASE_URL}customers`;
 }
 
 export default ApiUrl
