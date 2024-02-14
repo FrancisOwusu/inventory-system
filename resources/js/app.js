@@ -25,8 +25,10 @@ const Toast = Swal.mixin({
 window.Toast = Toast;
 //make notification global
 window.Notification = Notification;
-//import user
 
+
+//import user
+window.Reload= new Vue();
 window.ApiUrl= ApiUrl;
 const app = createApp({
     // components:{

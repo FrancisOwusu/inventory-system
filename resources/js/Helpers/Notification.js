@@ -40,6 +40,13 @@ class Notification {
             timeout:1000,
         })
     }
+    glob_success(msg) {
+        Toast.fire({
+            icon: 'success',
+            title: `${msg} added to Cart Successfully`
+        })
+    }
+
 }
 
 export default Notification = new Notification();

@@ -3,7 +3,7 @@
         <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">Products</h1>
+                <h1 class="h3 mb-0 text-gray-800">DataTables</h1>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="./">Home</a></li>
                     <li class="breadcrumb-item">Tables</li>
@@ -26,35 +26,27 @@
                                 <thead class="thead-light">
                                 <tr>
                                     <th>Name</th>
-                                    <th>Code</th>
-
-                                    <th>Category</th>
-                                    <th>Supplier</th>
-                                    <th>Image</th>
-                                    <th>Buying Price</th>
-                                    <th>Selling Price</th>
-                                    <th>Root</th>
-<!--                                    <th>Action</th>-->
+                                    <th>Photo</th>
+                                    <th>Salary</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Action</th>
                                     <!--<th>salary</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                <tr v-for="product in filterSearch" :key="product.id">
-                                    <td>{{ product.product_name }}</td>
-                                    <td>{{ product.product_code }}</td>
-                                    <td>{{product.category_name}}</td>
-                                    <td>{{product.supplier_name}}</td>
-                                    <td><img :src="product.image"/></td>
-                                   <td>{{ product.buying_price }}</td>
-                                    <td>{{ product.selling_price }}</td>
+                                <tr v-for="employee in filterSearch" :key="employee.id">
+                                    <td>{{employee.name}}</td>
+                                    <td><img :src="employee.photo"/></td>
+                                    <td>{{employee.salary}}</td>
+                                    <td>{{employee.email}}</td>
+                                    <td>{{employee.phone}}</td>
                                     <td>
-                                        <router-link :to="{name:'edit-product', params:{id:product.id}}"
-                                                     class="btn btn-sm btn-primary">Edit
-                                        </router-link>
-                                        <button @click="deleteProduct(product.id)" class="btn btn-sm btn-danger">
-                                            Delete
-                                        </button>
+                                        <router-link :to="{name:'pay-salary', params:{id:employee.id}}" class="btn btn-sm btn-primary">Pay Salary</router-link>
+<!--                                        <button @click="deleteEmployee(employee.id)" class="btn btn-sm btn-danger">-->
+<!--                                            Delete-->
+<!--                                        </button>-->
                                     </td>
                                     <!--<td>2011/01/25</td>-->
                                     <!--<td>$1</td>-->
@@ -70,42 +62,38 @@
 </template>
 
 <script>
-import apiUrl from "@/Helpers/ApiUrl";
-
 export default {
     name: "index",
     created() {
         if (!User.loggedIn()) {
             this.$router.push({name: '/'});
         }
-        this.allProducts();
+        this.allEmployees();
     },
     data() {
         return {
-            products: [],
+            employees: [],
             searchTerm: ''
         };
     },
     computed: {
         filterSearch() {
-            return this.products.filter(product => {
-
-                return product.product_name.match(this.searchTerm);
+            return this.employees.filter(employee => {
+                return employee.phone.match(this.searchTerm);
             })
         }
 
     },
     methods: {
-        allProducts() {
-            console.log(apiUrl.PRODUCTS)
+        allEmployees() {
             axios
-                .get(apiUrl.PRODUCTS, this.form)
-                .then(({data}) => (this.products = data))
+                .get(ApiUrl.EMPLOYEES, this.form)
+                .then(({data}) => (this.employees = data))
                 .catch((error) => {
                     this.errors = error.response.data.errors
                 })
         },
-        deleteProduct(id) {
+        deleteEmployee(id) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -117,16 +105,16 @@ export default {
             }).then((result) => {
                 if (result.isConfirmed) {
                     axios
-                        .delete('api/products/' + id)
+                        .delete(ApiUrl.EMPLOYEES+ "/" + id)
                         .then(() => {
-                            this.products = this.products.filter(
-                                product => {
-                                    return product.id != id;
+                            this.employees = this.employees.filter(
+                                employee => {
+                                    return employee.id != id;
                                 }
                             )
                         })
                         .catch(() => {
-                            this.$router.push('/products')
+                            this.$router.push('/employees')
                         })
                     Swal.fire(
                         'Deleted!',

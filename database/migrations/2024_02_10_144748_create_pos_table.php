@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('salaries', function (Blueprint $table) {
-            $table->id();
-            $table->integer('employee_id');
-            $table->string('amount')->nullable();
-            $table->string('salary_date')->nullable();
-            $table->string('salary_month')->nullable();
-            $table->string('salary_year')->nullable();
+        Schema::create('pos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('product_id');
+            $table->string('product_name')->nullable();
+            $table->string('quantity')->nullable();
+            $table->string('price')->nullable();
+            $table->string('sub_total')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('salaries');
+        Schema::dropIfExists('pos');
     }
 };

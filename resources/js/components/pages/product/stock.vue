@@ -31,10 +31,10 @@
                                     <th>Category</th>
                                     <th>Supplier</th>
                                     <th>Image</th>
-                                    <th>Buying Price</th>
-                                    <th>Selling Price</th>
-                                    <th>Root</th>
-<!--                                    <th>Action</th>-->
+                                    <th>Status</th>
+                                    <th>Quantity</th>
+                                    <th>Action</th>
+                                    <!--                                    <th>Action</th>-->
                                     <!--<th>salary</th>-->
                                 </tr>
                                 </thead>
@@ -46,15 +46,14 @@
                                     <td>{{product.category_name}}</td>
                                     <td>{{product.supplier_name}}</td>
                                     <td><img :src="product.image"/></td>
-                                   <td>{{ product.buying_price }}</td>
-                                    <td>{{ product.selling_price }}</td>
+                                    <td v-if="product.product_quantity >= 1"><span class="badge badge-success">Available</span></td>
+                                    <td v-else=""><span class="badge badge-danger">Out Of Stock</span></td>
+                                    <td>{{ product.product_quantity }}</td>
                                     <td>
-                                        <router-link :to="{name:'edit-product', params:{id:product.id}}"
+                                        <router-link :to="{name:'edit-stock', params:{id:product.id}}"
                                                      class="btn btn-sm btn-primary">Edit
                                         </router-link>
-                                        <button @click="deleteProduct(product.id)" class="btn btn-sm btn-danger">
-                                            Delete
-                                        </button>
+
                                     </td>
                                     <!--<td>2011/01/25</td>-->
                                     <!--<td>$1</td>-->
@@ -104,38 +103,6 @@ export default {
                 .catch((error) => {
                     this.errors = error.response.data.errors
                 })
-        },
-        deleteProduct(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    axios
-                        .delete('api/products/' + id)
-                        .then(() => {
-                            this.products = this.products.filter(
-                                product => {
-                                    return product.id != id;
-                                }
-                            )
-                        })
-                        .catch(() => {
-                            this.$router.push('/products')
-                        })
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                }
-            })
-
         }
     }
 

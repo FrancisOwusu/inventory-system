@@ -3,7 +3,7 @@
         <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">Products</h1>
+                <h1 class="h3 mb-0 text-gray-800">Salaries</h1>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="./">Home</a></li>
                     <li class="breadcrumb-item">Tables</li>
@@ -17,7 +17,7 @@
                 <div class="col-lg-12">
                     <div class="card mb-4">
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Salaries</h6>
                         </div>
                         <input style="width: 300px;" v-model="searchTerm" class="form-control"
                                placeholder="Search here"/>
@@ -25,36 +25,28 @@
                             <table class="table align-items-center table-flush" id="dataTable">
                                 <thead class="thead-light">
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Code</th>
-
-                                    <th>Category</th>
-                                    <th>Supplier</th>
-                                    <th>Image</th>
-                                    <th>Buying Price</th>
-                                    <th>Selling Price</th>
-                                    <th>Root</th>
+                                    <th>Month Name</th>
+                                    <th>Details</th>
+<!--                                    <th>Email</th>-->
+<!--                                    <th>Phone</th>-->
 <!--                                    <th>Action</th>-->
-                                    <!--<th>salary</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                <tr v-for="product in filterSearch" :key="product.id">
-                                    <td>{{ product.product_name }}</td>
-                                    <td>{{ product.product_code }}</td>
-                                    <td>{{product.category_name}}</td>
-                                    <td>{{product.supplier_name}}</td>
-                                    <td><img :src="product.image"/></td>
-                                   <td>{{ product.buying_price }}</td>
-                                    <td>{{ product.selling_price }}</td>
+                                <tr v-for="salary in filterSearch" :key="salary.id">
+                                    <td>{{ salary.salary_month }}</td>
+<!--                                    <td><img :src="customer.photo"/></td>-->
+
+<!--                                    <td>{{ customer.email }}</td>-->
+<!--                                    <td>{{ customer.phone }}</td>-->
                                     <td>
-                                        <router-link :to="{name:'edit-product', params:{id:product.id}}"
-                                                     class="btn btn-sm btn-primary">Edit
+                                        <router-link :to="{name:'view-salary', params:{id:salary.salary_month}}"
+                                                     class="btn btn-sm btn-primary">View Salary
                                         </router-link>
-                                        <button @click="deleteProduct(product.id)" class="btn btn-sm btn-danger">
-                                            Delete
-                                        </button>
+<!--                                        <button @click="deleteCustomer(customer.id)" class="btn btn-sm btn-danger">-->
+<!--                                            Delete-->
+<!--                                        </button>-->
                                     </td>
                                     <!--<td>2011/01/25</td>-->
                                     <!--<td>$1</td>-->
@@ -70,42 +62,38 @@
 </template>
 
 <script>
-import apiUrl from "@/Helpers/ApiUrl";
-
 export default {
     name: "index",
     created() {
         if (!User.loggedIn()) {
             this.$router.push({name: '/'});
         }
-        this.allProducts();
+        this.allSalaries();
     },
     data() {
         return {
-            products: [],
+            salaries: [],
             searchTerm: ''
         };
     },
     computed: {
         filterSearch() {
-            return this.products.filter(product => {
-
-                return product.product_name.match(this.searchTerm);
+            return this.salaries.filter(salary => {
+                return salary.salary_month.match(this.searchTerm);
             })
         }
 
     },
     methods: {
-        allProducts() {
-            console.log(apiUrl.PRODUCTS)
+        allSalaries() {
             axios
-                .get(apiUrl.PRODUCTS, this.form)
-                .then(({data}) => (this.products = data))
+                .get(ApiUrl.SALARY)
+                .then(({data}) => (this.salaries = data))
                 .catch((error) => {
                     this.errors = error.response.data.errors
                 })
         },
-        deleteProduct(id) {
+        deleteCustomer(id) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -117,16 +105,16 @@ export default {
             }).then((result) => {
                 if (result.isConfirmed) {
                     axios
-                        .delete('api/products/' + id)
+                        .delete(ApiUrl.CUSTOMERS+'/' + id)
                         .then(() => {
-                            this.products = this.products.filter(
-                                product => {
-                                    return product.id != id;
+                            this.customers = this.customers.filter(
+                                customer => {
+                                    return customer.id != id;
                                 }
                             )
                         })
                         .catch(() => {
-                            this.$router.push('/products')
+                            this.$router.push('/customers')
                         })
                     Swal.fire(
                         'Deleted!',

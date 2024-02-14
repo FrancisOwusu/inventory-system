@@ -44,12 +44,12 @@
                     Features
                 </div>
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap1"
                        aria-expanded="true" aria-controls="collapseBootstrap">
                         <i class="far fa-fw fa-window-maximize"></i>
                         <span>Employee</span>
                     </a>
-                    <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
+                    <div id="collapseBootstrap1" class="collapse" aria-labelledby="headingBootstrap"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             {{--<h6 class="collapse-header">Bootstrap UI</h6>--}}
@@ -59,12 +59,12 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap2"
                        aria-expanded="true" aria-controls="collapseBootstrap">
                         <i class="far fa-fw fa-window-maximize"></i>
                         <span>Categories</span>
                     </a>
-                    <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
+                    <div id="collapseBootstrap2" class="collapse" aria-labelledby="headingBootstrap"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             {{--<h6 class="collapse-header">Bootstrap UI</h6>--}}
@@ -90,12 +90,12 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable"
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable1"
                        aria-expanded="true" aria-controls="collapseTable">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Products</span>
                     </a>
-                    <div id="collapseTable" class="collapse" aria-labelledby="headingTable"
+                    <div id="collapseTable1" class="collapse" aria-labelledby="headingTable"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <router-link class="collapse-item" to="/store-product">Add Product</router-link>
@@ -105,12 +105,12 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable4"
                        aria-expanded="true" aria-controls="collapseProduct">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Expense</span>
                     </a>
-                    <div id="collapseTable" class="collapse" aria-labelledby="headingTable"
+                    <div id="collapseTable4" class="collapse" aria-labelledby="headingTable"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <router-link class="collapse-item" to="/store-expenses">Add Expenses</router-link>
@@ -134,6 +134,20 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <router-link class="collapse-item" to="/store-customer">Add Customer</router-link>
                             <router-link class="collapse-item" to="/customers">All Customers</router-link>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage1"
+                       aria-expanded="true" aria-controls="collapsePage">
+                        <i class="fas fa-fw fa-columns"></i>
+                        <span>Salary</span>
+                    </a>
+                    <div id="collapsePage1" class="collapse" aria-labelledby="headingPage"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <router-link class="collapse-item" to="/store-salary">Add Salary</router-link>
+                            <router-link class="collapse-item" to="/given-salary">Salaries</router-link>
                         </div>
                     </div>
                 </li>

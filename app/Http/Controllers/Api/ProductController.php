@@ -19,13 +19,13 @@ class ProductController extends CoreController
      */
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-     $products = DB::table('products')
-     ->join('categories','products.category_id','categories.id')
-     ->join('suppliers','products.supplier_id','suppliers.id')
-     ->select('categories.name as category_name','suppliers.name as supplier_name','products.*')
-     ->orderBy('products.id','DESC')
-     ->get();
-     return response()->json($products);
+        $products = DB::table('products')
+            ->join('categories', 'products.category_id', 'categories.id')
+            ->join('suppliers', 'products.supplier_id', 'suppliers.id')
+            ->select('categories.name as category_name', 'suppliers.name as supplier_name', 'products.*')
+            ->orderBy('products.id', 'DESC')
+            ->get();
+        return response()->json($products);
     }
 
 //    /**
@@ -41,7 +41,7 @@ class ProductController extends CoreController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request): JsonResponse
@@ -74,13 +74,13 @@ class ProductController extends CoreController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id,Request $request): JsonResponse
+    public function update($id, Request $request): JsonResponse
     {
-$productId= $id;
+        $productId = $id;
         $data =
             $request->validate($this->service->model()::updateRules($productId), $this->service->model()::errorMessages());
         $photo_source = $request->newImage;
@@ -98,13 +98,13 @@ $productId= $id;
 
 
             return response()->json(
-                [$this->service->update($productId,$data),
+                [$this->service->update($productId, $data),
                 ],
                 Response::HTTP_CREATED
             );
         }
         return response()->json(
-            [$this->service->update($productId,$data),
+            [$this->service->update($productId, $data),
             ],
             Response::HTTP_CREATED
         );
@@ -153,5 +153,16 @@ $productId= $id;
             ],
             Response::HTTP_CREATED
         );
+    }
+
+    public function updateStock($id,Request $request): JsonResponse{
+        $data=[];
+        $data['product_quantity'] = $request->product_quantity;
+        $resource = $this->service->update($id, $data);
+        if (!$resource) {
+            return response()->json(['message' => 'resource not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json($resource);
     }
 }

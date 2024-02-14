@@ -44,8 +44,15 @@ Route::middleware(['api'])->group(function () {
     Route::resource('supplier',SupplierController::class);
     Route::resource('categories',CategoryController::class);
     Route::resource('products',ProductController::class);
+    Route::get('sub/products/{id}',[\App\Http\Controllers\Api\PosController::class,'getProductByCategory']);
+    Route::get('carts/{id}',[\App\Http\Controllers\Api\CartController::class,'addToCart']);
+    Route::get('cart/products',[\App\Http\Controllers\Api\CartController::class,'cartProducts']);
     Route::resource('expenses',ExpenseController::class);
     Route::resource('customers',\App\Http\Controllers\Api\CustomerController::class);
+    Route::resource('salary',\App\Http\Controllers\Api\SalaryController::class);
+    Route::post('salary/pay/{id}',[\App\Http\Controllers\Api\SalaryController::class,'paySalary']);
+    Route::get('salary/view/{id}',[\App\Http\Controllers\Api\SalaryController::class,'viewSalary']);
+    Route::post('stock/update/{id}',[\App\Http\Controllers\Api\ProductController::class,'updateStock']);
 });
 
 

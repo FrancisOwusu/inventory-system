@@ -28,8 +28,22 @@ import StoreCustomer from './components/pages/customer/create.vue'
 import AllCustomers from './components/pages/customer/index.vue'
 import EditCustomer from './components/pages/customer/edit.vue'
 
+// import StoreSalary from './components/pages/salary/create.vue'
+import AllSalaries from './components/pages/salary/index.vue'
+import Salaries from './components/pages/salary/employees.vue'
+import EditSalary from './components/pages/salary/edit.vue'
+import ViewSalary from './components/pages/salary/view.vue'
+import PaySalary from './components/pages/salary/create.vue'
+
 
 import NotFound from './components/error/NotFound.vue'
+import Salary from "./components/pages/salary/index.vue";
+import Employees from "./components/pages/salary/employees.vue";
+
+
+import Stock from "./components/pages/product/stock.vue";
+import EditStock from "./components/pages/product/edit-stock.vue";
+import POS from "./components/pages/pos/point_of_sale.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -161,6 +175,53 @@ const router = createRouter({
             path: '/store-customer',
             name: 'store-customer',
             component: StoreCustomer
+        },
+        {
+            path: '/:catchAll(.*)',
+            name: 'NotFound',
+            component: NotFound
+        },
+        //salary
+        {
+            path: '/salaries',
+            name: 'salaries',
+            component: AllSalaries
+        },
+        {
+            path: '/view-salary/:id',
+            name: 'view-salary',
+            component: ViewSalary
+        },
+        {
+            path: '/given-salary',
+            name: 'given-salary',
+            component: Employees
+        },
+        {
+            path: '/salaries/edit/:id',
+            name: 'edit-salary',
+            component: EditSalary
+        },
+        {
+            path: '/stock',
+            name: 'stock',
+            component: Stock
+        },
+        {
+            path: '/stock/:id',
+            name: 'edit-stock',
+            component: EditStock
+        },
+        //stock
+        {
+            path: '/pay-salary/:id',
+            name: 'pay-salary',
+            component: PaySalary
+        },
+        {
+            path: '/pos',
+            name: 'pos',
+            component: POS
         },
         {
             path: '/:catchAll(.*)',

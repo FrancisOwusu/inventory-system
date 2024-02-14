@@ -29,7 +29,7 @@
                                     <th>Amount</th>
                                     <th>Date</th>
                                     <th>Action</th>
-                                    <!--<th>Salary</th>-->
+                                    <!--<th>salary</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
