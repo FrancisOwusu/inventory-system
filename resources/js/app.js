@@ -28,7 +28,7 @@ window.Notification = Notification;
 
 
 //import user
-window.Reload= new Vue();
+
 window.ApiUrl= ApiUrl;
 const app = createApp({
     // components:{

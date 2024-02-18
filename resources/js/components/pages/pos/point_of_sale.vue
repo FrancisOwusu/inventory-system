@@ -50,11 +50,12 @@
                                     <tr v-for="cart in carts" :key="cart.id">
                                         <td><a href="#">{{cart.product_name}}</a></td>
                                         <td><input type="text" readonly :value="cart.quantity">
-                                        <button class="btn-sm btn-success">+</button>
-                                        <button class="btn-sm btn-danger">-</button></td>
+                                        <button @click.prevent="increment(cart.id)" class="btn-sm btn-success">+</button>
+                                        <button @click.prevent="decrement(cart.id)" v-if="cart.quantity >= 2" class="btn-sm btn-danger">-</button>
+                                        <button v-else disabled class="btn-sm btn-danger">-</button></td>
                                         <td>{{cart.price}}</td>
                                         <td>{{cart.sub_total}}</td>
-                                        <td><a href="#" class="btn btn-sm btn-primary">X</a></td>
+                                        <td><a href="#" @click="removeToCart(cart.id)" class="btn btn-sm btn-danger">X</a></td>
                                     </tr>
 
                                     </tbody>
@@ -139,16 +140,14 @@
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-6" v-for="product in filterSearch"
                                              :key="product.id">
 
-                                            <a href="#">
+                                            <button class="btn-sm" @click.prevent="addToCart(product.id)">
                                                 <div class="card" style="width:8.5rem;margin-bottom: 5px;">
                                                     <img class="card-img-top" id="img_photo" :src="product.image"
                                                          alt="Card image">
                                                     <div class="card-body">
 
                                                         <h6 class="card-title">{{ product.product_name }}</h6>
-                                                        <button class="btn-sm" @click.prevent="addToCart(product.id)">
-                                                            Add
-                                                        </button>
+
                                                         <span v-if="product.product_quantity >= 1"
                                                               class="badge badge-success">Available {{
                                                                 product.product_quantity
@@ -157,7 +156,7 @@
                                                     </div>
 
                                                 </div>
-                                            </a>
+                                            </button>
                                         </div>
 
                                     </div>
@@ -185,7 +184,7 @@
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-6"
                                              v-for="subproduct in getFilterSearch" :key="subproduct.id">
 
-                                            <a href="#">
+                                            <button class="btn-sm" @click.prevent="addToCart(subproduct.id)">
                                                 <div class="card" style="width:8.5rem;margin-bottom: 5px;">
                                                     <img class="card-img-top" id="img_photo" :src="subproduct.image"
                                                          alt="Card image">
@@ -199,7 +198,7 @@
                                                     </div>
 
                                                 </div>
-                                            </a>
+                                            </button>
                                         </div>
 
                                     </div>
@@ -274,10 +273,45 @@ export default {
         addToCart(id) {
             axios
                 .get("/api/carts/" + id)
-                .then(() => (
-                    Reload.$emit('AfterAdd'),
+                .then(() => {
                     Notification.glob_success("Product")
-                    )
+                        window.location.reload();
+        }
+                )
+                .catch((error) => {
+
+                })
+        },
+        removeToCart(id) {
+            axios
+                .get("/api/carts/remove/" + id)
+                .then(() => {
+                        Notification.glob_success("Removed Product")
+                        window.location.reload();
+                    }
+                )
+                .catch((error) => {
+
+                })
+        },
+        increment(id) {
+            axios
+                .get("/api/carts/increment/" + id)
+                .then(() => {
+                        Notification.glob_success("Removed Product")
+                        window.location.reload();
+                    }
+                )
+                .catch((error) => {
+
+                })
+        },   decrement(id) {
+            axios
+                .get("/api/carts/decrement/" + id)
+                .then(() => {
+                        Notification.glob_success("Removed Product")
+                        window.location.reload();
+                    }
                 )
                 .catch((error) => {
 

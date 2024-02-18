@@ -22,7 +22,18 @@ class CartController extends Controller
         $data['quantity'] = 1;
         $data['sub_total'] = $product->selling_price;
 
- $save =DB::table('pos')->insert($data);
+        $checkProductExist = Cart::where("product_id", $id)
+            ->first();
+        if ($checkProductExist) {
+            DB::table('pos')->increment('quantity');
+            $product = Cart::where("product_id", $id)->first();
+            $subtotal = $product->quantity * $product->price;
+            $product->sub_total = $subtotal;
+            $product->save();
+        } else {
+            DB::table('pos')->insert($data);
+        }
+
 
         return response()->json(
             [$data,
@@ -30,6 +41,18 @@ class CartController extends Controller
             Response::HTTP_OK
         );
     }
+
+    public function removeCart($id): \Illuminate\Http\JsonResponse
+    {
+        $product = Cart::where("id", $id)
+            ->delete();
+        return response()->json(
+            [$product,
+            ],
+            Response::HTTP_OK
+        );
+    }
+
     public function cartProducts(): \Illuminate\Http\JsonResponse
     {
         $carts = Cart::get();
@@ -37,4 +60,31 @@ class CartController extends Controller
         );
     }
 
+    public function increment($id): \Illuminate\Http\JsonResponse
+    {
+        DB::table('pos')->where("id", $id)->increment('quantity');
+        $product = Cart::where("id", $id)->first();
+        $subtotal = $product->quantity * $product->price;
+        $product->sub_total = $subtotal;
+        $product->save();
+        return response()->json(
+            [$product,
+            ],
+            Response::HTTP_OK
+        );
+    }
+
+    public function decrement($id): \Illuminate\Http\JsonResponse
+    {
+        DB::table('pos')->where("id", $id)->decrement('quantity');
+        $product = Cart::where("id", $id)->first();
+        $subtotal = $product->quantity * $product->price;
+        $product->sub_total = $subtotal;
+        $product->save();
+        return response()->json(
+            [$product,
+            ],
+            Response::HTTP_OK
+        );
+    }
 }

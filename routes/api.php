@@ -46,6 +46,9 @@ Route::middleware(['api'])->group(function () {
     Route::resource('products',ProductController::class);
     Route::get('sub/products/{id}',[\App\Http\Controllers\Api\PosController::class,'getProductByCategory']);
     Route::get('carts/{id}',[\App\Http\Controllers\Api\CartController::class,'addToCart']);
+    Route::get('carts/remove/{id}',[\App\Http\Controllers\Api\CartController::class,'removeCart']);
+    Route::get('carts/increment/{id}',[\App\Http\Controllers\Api\CartController::class,'increment']);
+    Route::get('carts/decrement/{id}',[\App\Http\Controllers\Api\CartController::class,'decrement']);
     Route::get('cart/products',[\App\Http\Controllers\Api\CartController::class,'cartProducts']);
     Route::resource('expenses',ExpenseController::class);
     Route::resource('customers',\App\Http\Controllers\Api\CustomerController::class);
