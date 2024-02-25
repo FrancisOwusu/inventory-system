@@ -19,6 +19,35 @@ import AllProducts from './components/pages/product/index.vue'
 import EditProduct from './components/pages/product/edit.vue'
 
 
+import StoreExpenses from './components/pages/expenses/create.vue'
+import AllExpenses from './components/pages/expenses/index.vue'
+import EditExpenses from './components/pages/expenses/edit.vue'
+
+
+import StoreCustomer from './components/pages/customer/create.vue'
+import AllCustomers from './components/pages/customer/index.vue'
+import EditCustomer from './components/pages/customer/edit.vue'
+
+// import StoreSalary from './components/pages/salary/create.vue'
+import AllSalaries from './components/pages/salary/index.vue'
+import Salaries from './components/pages/salary/employees.vue'
+import EditSalary from './components/pages/salary/edit.vue'
+import ViewSalary from './components/pages/salary/view.vue'
+import PaySalary from './components/pages/salary/create.vue'
+
+
+import NotFound from './components/error/NotFound.vue'
+import Salary from "./components/pages/salary/index.vue";
+import Employees from "./components/pages/salary/employees.vue";
+
+
+import Stock from "./components/pages/product/stock.vue";
+import EditStock from "./components/pages/product/edit-stock.vue";
+import POS from "./components/pages/pos/point_of_sale.vue";
+
+import AllOrders from "./components/pages/orders/index.vue";
+import OrdersToday from "./components/pages/orders/ordersToday.vue";
+import ViewOrder from "./components/pages/orders/view-orders.vue";
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -30,6 +59,10 @@ const router = createRouter({
         {
             path: '/register',
             component: () => import('./components/auth/Register.vue')
+        },
+        {
+            path: '/pro',
+            component: () => import('./components/pages/Home.vue')
         }
         ,
         {
@@ -58,12 +91,17 @@ const router = createRouter({
             name: 'edit-employee',
             component: EditEmployee
         },
-        {path: '/store-employee', name: 'store-employee', component: StoreEmployee}
+        {
+            path: '/store-employee',
+            name: 'store-employee',
+            component: StoreEmployee
+        }
         //category
         ,
         {
             path: '/categories',
             name: 'categories',
+            // component:()=>import('./components/pages/product/sample.vue')
             component: AllCategory
         },
         {
@@ -107,6 +145,108 @@ const router = createRouter({
             path: '/store-product',
             name: 'store-product',
             component: StoreProduct
+        },
+
+        //expenses
+        {
+            path: '/expenses',
+            name: 'expenses',
+            component: AllExpenses
+        },
+        {
+            path: '/expenses/edit/:id',
+            name: 'edit-expenses',
+            component: EditExpenses
+        },
+        {
+            path: '/store-expenses',
+            name: 'store-expenses',
+            component: StoreExpenses
+        },
+        //customers
+        {
+            path: '/customers',
+            name: 'customers',
+            component: AllCustomers
+        },
+        {
+            path: '/customers/edit/:id',
+            name: 'edit-customer',
+            component: EditCustomer
+        },
+        {
+            path: '/store-customer',
+            name: 'store-customer',
+            component: StoreCustomer
+        },
+        {
+            path: '/:catchAll(.*)',
+            name: 'NotFound',
+            component: NotFound
+        },
+        //salary
+        {
+            path: '/salaries',
+            name: 'salaries',
+            component: AllSalaries
+        },
+        {
+            path: '/view-salary/:id',
+            name: 'view-salary',
+            component: ViewSalary
+        },
+        {
+            path: '/given-salary',
+            name: 'given-salary',
+            component: Employees
+        },
+        {
+            path: '/salaries/edit/:id',
+            name: 'edit-salary',
+            component: EditSalary
+        },
+        {
+            path: '/stock',
+            name: 'stock',
+            component: Stock
+        },
+        {
+            path: '/stock/:id',
+            name: 'edit-stock',
+            component: EditStock
+        },
+        //stock
+        {
+            path: '/pay-salary/:id',
+            name: 'pay-salary',
+            component: PaySalary
+        },
+        {
+            path: '/pos',
+            name: 'pos',
+            component: POS
+        },
+
+        //orders
+        {
+            path:'/orders',
+            name:'orders',
+            component:AllOrders
+        },
+        {
+            path:'/orders_today',
+            name:'orders_today',
+            component:OrdersToday
+        },
+        {
+            path:'/view-order',
+            name:'view-order',
+            component:ViewOrder
+        },
+        {
+            path: '/:catchAll(.*)',
+            name: 'NotFound',
+            component: NotFound
         }
     ],
 });

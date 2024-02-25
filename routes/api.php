@@ -20,7 +20,9 @@
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\CategoryController;
-use \App\Http\Controllers\ProductController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ExpenseController;
+
 Route::group([
 
     'middleware' => 'api',
@@ -42,6 +44,22 @@ Route::middleware(['api'])->group(function () {
     Route::resource('supplier',SupplierController::class);
     Route::resource('categories',CategoryController::class);
     Route::resource('products',ProductController::class);
+    Route::get('sub/products/{id}',[\App\Http\Controllers\Api\PosController::class,'getProductByCategory']);
+    Route::get('carts/{id}',[\App\Http\Controllers\Api\CartController::class,'addToCart']);
+    Route::get('carts/remove/{id}',[\App\Http\Controllers\Api\CartController::class,'removeCart']);
+    Route::get('carts/increment/{id}',[\App\Http\Controllers\Api\CartController::class,'increment']);
+    Route::get('carts/decrement/{id}',[\App\Http\Controllers\Api\CartController::class,'decrement']);
+    Route::get('cart/products',[\App\Http\Controllers\Api\CartController::class,'cartProducts']);
+    Route::resource('expenses',ExpenseController::class);
+    Route::resource('customers',\App\Http\Controllers\Api\CustomerController::class);
+    Route::resource('salary',\App\Http\Controllers\Api\SalaryController::class);
+    Route::post('salary/pay/{id}',[\App\Http\Controllers\Api\SalaryController::class,'paySalary']);
+    Route::get('salary/view/{id}',[\App\Http\Controllers\Api\SalaryController::class,'viewSalary']);
+    Route::post('stock/update/{id}',[\App\Http\Controllers\Api\ProductController::class,'updateStock']);
+
+    Route::post('orders',[\App\Http\Controllers\Api\PosController::class,'postOrder']);
+    Route::get('orders/today',[\App\Http\Controllers\Api\OrderController::class,'ordersToday']);
+    Route::get('vats',[\App\Http\Controllers\Api\SettingsController::class,'getVat']);
 });
 
 

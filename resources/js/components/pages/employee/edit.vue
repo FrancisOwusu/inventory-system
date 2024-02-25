@@ -117,9 +117,7 @@
                         </form>
                     </div>
                 </div>
-
                 <!-- Form Sizing -->
-
             </div>
 
 
@@ -197,7 +195,7 @@
             // }
             onFileSelected(event) {
                 let file = event.target.files[0];
-                if (file > 1048770) {
+                if (file.size > 1048770) {
                     Toast.fire({
                         icon: 'error',
                         title: 'File Is more than 1MB'

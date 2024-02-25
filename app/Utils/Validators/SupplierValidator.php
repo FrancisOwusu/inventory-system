@@ -36,8 +36,8 @@ trait SupplierValidator
             'name' => ['required', 'string',
                 //                Rule::unique('categories')->ignore($user->id),
             ],
-            'email' => ['required', 'string', Rule::unique('suppliers')],
-            'phone' => ['required', 'string', Rule::unique('suppliers')],
+            'email' => ['required', 'string'],
+            'phone' => ['required', 'string'],
             'shopname' => ['nullable'],
             'address' => ['nullable'],
         ];

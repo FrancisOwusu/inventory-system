@@ -113,8 +113,7 @@
 
 <script>
 export default {
-    name: "create",
-
+    name: "edit",
     data() {
         return {
             form: {
