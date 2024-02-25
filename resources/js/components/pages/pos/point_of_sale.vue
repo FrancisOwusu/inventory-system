@@ -48,14 +48,19 @@
                                     </thead>
                                     <tbody>
                                     <tr v-for="cart in carts" :key="cart.id">
-                                        <td><a href="#">{{cart.product_name}}</a></td>
+                                        <td><a href="#">{{ cart.product_name }}</a></td>
                                         <td><input type="text" readonly :value="cart.quantity">
-                                        <button @click.prevent="increment(cart.id)" class="btn-sm btn-success">+</button>
-                                        <button @click.prevent="decrement(cart.id)" v-if="cart.quantity >= 2" class="btn-sm btn-danger">-</button>
-                                        <button v-else disabled class="btn-sm btn-danger">-</button></td>
-                                        <td>{{cart.price}}</td>
-                                        <td>{{cart.sub_total}}</td>
-                                        <td><a href="#" @click="removeToCart(cart.id)" class="btn btn-sm btn-danger">X</a></td>
+                                            <button @click.prevent="increment(cart.id)" class="btn-sm btn-success">+
+                                            </button>
+                                            <button @click.prevent="decrement(cart.id)" v-if="cart.quantity >= 2"
+                                                    class="btn-sm btn-danger">-
+                                            </button>
+                                            <button v-else disabled class="btn-sm btn-danger">-</button>
+                                        </td>
+                                        <td>{{ cart.price }}</td>
+                                        <td>{{ cart.sub_total }}</td>
+                                        <td><a href="#" @click="removeToCart(cart.id)"
+                                               class="btn btn-sm btn-danger">X</a></td>
                                     </tr>
 
                                     </tbody>
@@ -67,32 +72,32 @@
                         <div class="card-footer">
                             <ul class="list-group">
                                 <li class="list-group-item  d-flex justify-content-between align-items-center">
-                                    Total Quantity:<strong>56</strong>
+                                    Total Quantity:<strong>{{ totalQuantity() }}</strong>
                                 </li>
                                 <li class="list-group-item  d-flex justify-content-between align-items-center">
-                                    Sub Total:<strong>56</strong>
+                                    Sub Total:<strong>{{ subTotal() }}</strong>
                                 </li>
                                 <li class="list-group-item  d-flex justify-content-between align-items-center">
-                                    Vat :<strong>30%</strong>
+                                    Vat :<strong>{{ vats.vat }}%</strong>
                                 </li>
                                 <li class="list-group-item  d-flex justify-content-between align-items-center">
-                                    Total :<strong>56</strong>
+                                    Total :<strong>{{ totalAmount() }}</strong>
                                 </li>
                             </ul>
                             <br>
-                            <form>
+                            <form @submit.prevent="postOrder()">
                                 <label>Customer Name</label>
-                                <select class="form-control" v-for="customer in customers" >
-                                    <option>{{ customer.name }}</option>
+                                <select class="form-control" v-for="customer in customers" v-model="customer_id">
+                                    <option :value="customer.id">{{ customer.name }}</option>
 
                                 </select>
                                 <label>Pay</label>
-                                <input type="text" class="form-control" required="" >
+                                <input type="text" class="form-control" v-model="pay" required="">
                                 <label>Due</label>
-                                <input type="text" class="form-control" required="" >
+                                <input type="text" class="form-control" v-model="due" required="">
 
                                 <label>Paid By</label>
-                                <select class="form-control" >
+                                <select class="form-control" v-model="pay_by">
                                     <option value="cash">Cash</option>
                                     <option value="cheque">Cheque</option>
                                     <option value="gift">Gift</option>
@@ -233,116 +238,47 @@ export default {
     name: "Home",
     components: {Index},
 
+
     created() {
         if (!User.loggedIn()) {
             this.$router.push({name: '/'});
         }
-        this.allProducts();
-        this.allCategories();
-        this.getAllProductsByCategory();
-        this.allCustomers();
-        this.cartProducts();
+        this.loadData();
     },
     data() {
         return {
+            pay_by: '',
+            due: '',
+            customer_id: '',
+            pay: '',
             products: [],
             categories: [],
             customers: [],
             getProductsByCategory: [],
             searchTerm: '',
             getSearchTerm: '',
-            carts:[],
-            errors:''
+            carts: [],
+            vats: [],
+            errors: ''
         };
     },
     computed: {
         filterSearch() {
-            return this.products.filter(product => {
-                return product.product_name.match(this.searchTerm);
-            })
+            return this.products.filter(product => product.product_name.match(this.searchTerm));
         },
         getFilterSearch() {
-            return this.getProductsByCategory.filter(subproduct => {
-                return subproduct.product_name.match(this.getSearchTerm);
-            })
+            return this.getProductsByCategory.filter(subproduct => subproduct.product_name.match(this.getSearchTerm));
         }
-
-
     },
     methods: {
-        addToCart(id) {
-            axios
-                .get("/api/carts/" + id)
-                .then(() => {
-                    Notification.glob_success("Product")
-                        window.location.reload();
-        }
-                )
-                .catch((error) => {
-
-                })
+        loadData() {
+            this.allProducts();
+            this.allCategories();
+            this.getAllProductsByCategory();
+            this.allCustomers();
+            this.cartProducts();
+            this.getVat();
         },
-        removeToCart(id) {
-            axios
-                .get("/api/carts/remove/" + id)
-                .then(() => {
-                        Notification.glob_success("Removed Product")
-                        window.location.reload();
-                    }
-                )
-                .catch((error) => {
-
-                })
-        },
-        increment(id) {
-            axios
-                .get("/api/carts/increment/" + id)
-                .then(() => {
-                        Notification.glob_success("Removed Product")
-                        window.location.reload();
-                    }
-                )
-                .catch((error) => {
-
-                })
-        },   decrement(id) {
-            axios
-                .get("/api/carts/decrement/" + id)
-                .then(() => {
-                        Notification.glob_success("Removed Product")
-                        window.location.reload();
-                    }
-                )
-                .catch((error) => {
-
-                })
-        },
-        allCustomers() {
-            axios
-                .get(ApiUrl.CUSTOMERS, this.form)
-                .then(({data}) => (this.customers = data))
-                .catch((error) => {
-                    this.errors = error.response.data.errors
-                })
-        },
-        cartProducts() {
-            axios
-                .get('api/cart/products')
-                .then(({data}) => (
-                    this.carts = data))
-                .catch((error) => {
-                    this.errors = error.response.data.errors
-                })
-        },
-        allProducts() {
-            axios
-                .get(apiUrl.PRODUCTS, this.form)
-                .then(({data}) => (this.products = data))
-                .catch((error) => {
-                    this.errors = error.response.data.errors
-                })
-        },
-
         allCategories() {
             axios
                 .get("/api/categories")
@@ -351,6 +287,49 @@ export default {
                 .catch((error) => {
                     this.errors = error.response.data.errors
                 })
+        },
+        addToCart(id) {
+            this.updateCart("/api/carts/" + id);
+        },
+        removeToCart(id) {
+            this.updateCart("/api/carts/remove/" + id);
+        },
+        increment(id) {
+            this.updateCart("/api/carts/increment/" + id);
+        },
+        decrement(id) {
+            this.updateCart("/api/carts/decrement/" + id);
+        },
+        updateCart(url) {
+            axios
+                .get(url)
+                .then(() => {
+                    Notification.glob_success("Product");
+                    this.reloadPage();
+                })
+                .catch(error => {
+                    // Handle error
+                });
+        },
+        allCustomers() {
+            this.fetchData(ApiUrl.CUSTOMERS, data => (this.customers = data));
+        },
+        cartProducts() {
+            this.fetchData('api/cart/products', data => (this.carts = data));
+        },
+        allProducts() {
+            this.fetchData(apiUrl.PRODUCTS, data => (this.products = data));
+        },
+        getVat() {
+            this.fetchData(ApiUrl.BASE_URL + 'vats', data => (this.vats = data));
+        },
+        fetchData(url, successCallback) {
+            axios
+                .get(url, this.form)
+                .then(({data}) => successCallback(data))
+                .catch(error => {
+                    this.errors = error.response.data.errors;
+                });
         },
         getAllProductsByCategory(id) {
             axios
@@ -361,11 +340,43 @@ export default {
                 .catch((error) => {
                     this.errors = error.response.data.errors
                 })
+        },
+
+        totalQuantity() {
+            return this.carts.reduce((sum, item) => sum + parseFloat(item.quantity), 0);
+        },
+        totalAmount() {
+            return this.subTotal() + this.subTotal() * parseFloat(this.vats.vat) / 100;
+        },
+        subTotal() {
+            return this.carts.reduce((sum, item) => sum + parseFloat(item.quantity) * parseFloat(item.price), 0);
+        },
+        postOrder() {
+            const total = this.totalAmount();
+            const data = {
+                quantity: this.totalQuantity(),
+                subtotal: this.subTotal(),
+                customer_id: this.customer_id,
+                pay_by: this.pay_by,
+                due: this.due,
+                vat: this.vats.vat,
+                total: total
+            };
+            axios
+                .post(ApiUrl.BASE_URL + 'orders', data)
+                .then(() => {
+                    // Handle success
+                    this.$router.push({name: 'home'});
+                })
+                .catch(error => {
+                    this.errors = error.response.data;
+                });
+
         }
     }
-
-
 }
+
+
 </script>
 
 <style scoped>

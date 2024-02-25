@@ -56,6 +56,10 @@ Route::middleware(['api'])->group(function () {
     Route::post('salary/pay/{id}',[\App\Http\Controllers\Api\SalaryController::class,'paySalary']);
     Route::get('salary/view/{id}',[\App\Http\Controllers\Api\SalaryController::class,'viewSalary']);
     Route::post('stock/update/{id}',[\App\Http\Controllers\Api\ProductController::class,'updateStock']);
+
+    Route::post('orders',[\App\Http\Controllers\Api\PosController::class,'postOrder']);
+    Route::get('orders/today',[\App\Http\Controllers\Api\OrderController::class,'ordersToday']);
+    Route::get('vats',[\App\Http\Controllers\Api\SettingsController::class,'getVat']);
 });
 
 

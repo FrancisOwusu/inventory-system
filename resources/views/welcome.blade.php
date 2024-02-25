@@ -35,7 +35,7 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="#">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
@@ -148,6 +148,25 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <router-link class="collapse-item" to="/store-salary">Add Salary</router-link>
                             <router-link class="collapse-item" to="/given-salary">Salaries</router-link>
+                        </div>
+                    </div>
+                </li>
+
+                                <hr class="sidebar-divider">
+                                <div class="sidebar-heading">
+                                    Order Management
+                                </div>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage7"
+                       aria-expanded="true" aria-controls="collapsePage">
+                        <i class="fas fa-fw fa-columns"></i>
+                        <span>Orders</span>
+                    </a>
+                    <div id="collapsePage7" class="collapse" aria-labelledby="headingPage"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <router-link class="collapse-item" to="/orders_today">Orders Today</router-link>
+                            <router-link class="collapse-item" to="/orders">All Orders</router-link>
                         </div>
                     </div>
                 </li>
@@ -386,7 +405,7 @@
                             <span>copyright &copy;
 
                                 - developed by
-                                <b><a href="https://indrijunanda.gitlab.io/" target="_blank">indrijunanda</a></b>
+                                <b><a href="https://indrijunanda.gitlab.io/" target="_blank">Francis Owusu</a></b>
                             </span>
                     </div>
                 </div>

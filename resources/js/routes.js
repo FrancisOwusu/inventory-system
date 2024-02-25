@@ -45,6 +45,9 @@ import Stock from "./components/pages/product/stock.vue";
 import EditStock from "./components/pages/product/edit-stock.vue";
 import POS from "./components/pages/pos/point_of_sale.vue";
 
+import AllOrders from "./components/pages/orders/index.vue";
+import OrdersToday from "./components/pages/orders/ordersToday.vue";
+import ViewOrder from "./components/pages/orders/view-orders.vue";
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -222,6 +225,23 @@ const router = createRouter({
             path: '/pos',
             name: 'pos',
             component: POS
+        },
+
+        //orders
+        {
+            path:'/orders',
+            name:'orders',
+            component:AllOrders
+        },
+        {
+            path:'/orders_today',
+            name:'orders_today',
+            component:OrdersToday
+        },
+        {
+            path:'/view-order',
+            name:'view-order',
+            component:ViewOrder
         },
         {
             path: '/:catchAll(.*)',
