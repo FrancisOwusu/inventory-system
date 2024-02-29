@@ -97,7 +97,6 @@ export default {
     },
     methods: {
         allProducts() {
-            console.log(apiUrl.PRODUCTS)
             axios
                 .get(apiUrl.PRODUCTS, this.form)
                 .then(({data}) => (this.products = data))

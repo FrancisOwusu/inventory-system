@@ -357,6 +357,7 @@ export default {
                 quantity: this.totalQuantity(),
                 subtotal: this.subTotal(),
                 customer_id: this.customer_id,
+                pay:this.pay,
                 pay_by: this.pay_by,
                 due: this.due,
                 vat: this.vats.vat,
@@ -365,7 +366,6 @@ export default {
             axios
                 .post(ApiUrl.BASE_URL + 'orders', data)
                 .then(() => {
-                    // Handle success
                     this.$router.push({name: 'home'});
                 })
                 .catch(error => {

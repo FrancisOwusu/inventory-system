@@ -24,7 +24,6 @@ class PosController extends Controller
 
     public function postOrder(Request $request): JsonResponse
     {
-//return
         $request->validate([
             'customer_id' => 'required',
             'pay_by' => 'required'
@@ -34,6 +33,7 @@ class PosController extends Controller
         $data['customer_id'] = $request->customer_id;
         $data['due'] = $request->due;
         $data['pay_by'] = $request->pay_by;
+        $data['pay'] = $request->pay;
         $data['quantity'] = $request->quantity;
         $data['subtotal'] = $request->subtotal;
         $data['total'] = $request->total;
@@ -59,7 +59,6 @@ class PosController extends Controller
                     ]);
 
             }
-
             DB::table('pos')->delete();
             return response()->json(
                 [$order,
@@ -67,12 +66,19 @@ class PosController extends Controller
                 Response::HTTP_OK
             );
 
-
-//        return response()->json($request->all());
-    }
+        }
         return response()->json(
             [$order,
             ],
             Response::HTTP_OK);
-}
+    }
+
+    public function stockOut(): JsonResponse
+    {
+        $products =
+            DB::table('products')
+            ->where('products.product_quantity', '<', '1')
+            ->get();
+        return response()->json($products);
+    }
 }

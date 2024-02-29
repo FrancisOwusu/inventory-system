@@ -34,8 +34,6 @@
                                     <th>Status</th>
                                     <th>Quantity</th>
                                     <th>Action</th>
-                                    <!--                                    <th>Action</th>-->
-                                    <!--<th>salary</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -43,10 +41,11 @@
                                 <tr v-for="product in filterSearch" :key="product.id">
                                     <td>{{ product.product_name }}</td>
                                     <td>{{ product.product_code }}</td>
-                                    <td>{{product.category_name}}</td>
-                                    <td>{{product.supplier_name}}</td>
-                                    <td><img :src="product.image"/></td>
-                                    <td v-if="product.product_quantity >= 1"><span class="badge badge-success">Available</span></td>
+                                    <td>{{ product.category_name }}</td>
+                                    <td>{{ product.supplier_name }}</td>
+                                    <td><img :src="product.image" id="img_photo"/></td>
+                                    <td v-if="product.product_quantity >= 1"><span
+                                        class="badge badge-success">Available</span></td>
                                     <td v-else=""><span class="badge badge-danger">Out Of Stock</span></td>
                                     <td>{{ product.product_quantity }}</td>
                                     <td>
@@ -55,8 +54,6 @@
                                         </router-link>
 
                                     </td>
-                                    <!--<td>2011/01/25</td>-->
-                                    <!--<td>$1</td>-->
                                 </tr>
                                 </tbody>
                             </table>
@@ -110,5 +107,8 @@ export default {
 </script>
 
 <style scoped>
-
+#img_photo {
+    height: 100px;
+    width: 135px;
+}
 </style>

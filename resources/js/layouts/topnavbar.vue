@@ -29,10 +29,8 @@
                 <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        {{--<h6 class="collapse-header">Bootstrap UI</h6>--}}
                         <router-link class="collapse-item" to="/store-employee">Add Employee</router-link>
                         <router-link class="collapse-item" to="/employee">All Employees</router-link>
-                        <a class="collapse-item" href="dropdowns.html">Dropdowns</a>
 
                     </div>
                 </div>

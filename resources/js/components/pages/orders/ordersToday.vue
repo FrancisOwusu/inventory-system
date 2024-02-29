@@ -28,6 +28,7 @@
                                     <th>Name</th>
                                     <th>Total Amount</th>
                                     <th>Pay</th>
+                                    <th>Due</th>
                                     <th>Date</th>
                                     <th>Paid By</th>
                                     <th>Action</th>
@@ -39,6 +40,7 @@
                                 <tr v-for="order in filterSearch" :key="order.id">
                                     <td>{{ order.name }}</td>
                                     <td>{{ order.total}}</td>
+                                    <td>{{ order.pay}}</td>
                                     <td>{{ order.due}}</td>
                                     <td>{{ order.order_date }}</td>
                                     <td>{{ order.pay_by }}</td>

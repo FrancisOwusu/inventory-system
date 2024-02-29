@@ -165,4 +165,6 @@ class ProductController extends CoreController
 
         return response()->json($resource);
     }
+
+
 }

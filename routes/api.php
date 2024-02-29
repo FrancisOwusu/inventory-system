@@ -44,6 +44,7 @@ Route::middleware(['api'])->group(function () {
     Route::resource('supplier',SupplierController::class);
     Route::resource('categories',CategoryController::class);
     Route::resource('products',ProductController::class);
+
     Route::get('sub/products/{id}',[\App\Http\Controllers\Api\PosController::class,'getProductByCategory']);
     Route::get('carts/{id}',[\App\Http\Controllers\Api\CartController::class,'addToCart']);
     Route::get('carts/remove/{id}',[\App\Http\Controllers\Api\CartController::class,'removeCart']);
@@ -59,6 +60,21 @@ Route::middleware(['api'])->group(function () {
 
     Route::post('orders',[\App\Http\Controllers\Api\PosController::class,'postOrder']);
     Route::get('orders/today',[\App\Http\Controllers\Api\OrderController::class,'ordersToday']);
+    Route::get('orders/{id}',[\App\Http\Controllers\Api\OrderController::class,'orderDetails']);
+    Route::get('stockout',[\App\Http\Controllers\Api\PosController::class,'stockOut']);
+
+   Route::group(['prefix'=>'today'],function (){
+       Route::get('income',[\App\Http\Controllers\Api\OrderController::class,'incomeToday']);
+       Route::get('due',[\App\Http\Controllers\Api\OrderController::class,'dueToday']);
+       Route::get('sales',[\App\Http\Controllers\Api\OrderController::class,'todaySales']);
+       Route::get('expenses',[\App\Http\Controllers\Api\OrderController::class,'todayExpenses']);
+
+   });
+
+
+
+    Route::get('orders/order_details/{id}',[\App\Http\Controllers\Api\OrderController::class,'orderDetailsAll']);
+    Route::post('orders/search',[\App\Http\Controllers\Api\OrderController::class,'searchOrder']);
     Route::get('vats',[\App\Http\Controllers\Api\SettingsController::class,'getVat']);
 });
 

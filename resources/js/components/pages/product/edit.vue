@@ -227,7 +227,6 @@
             axios.get(ApiUrl.PRODUCTS + "/" + id)
                 .then(({data}) => {
                         (this.form = data)
-                        console.log(data)
                     }
                 )
                 .catch((error) => {
@@ -266,13 +265,7 @@
                         console.log(error);
                         this.errors = error.response.data
                     })
-                //     .catch(
-                //     Toast.fire({
-                //         icon: 'warning',
-                //         title: 'Invalid Email or Password'
-                //     })
-                // );
-                // .finally(() => (this.loading = false));
+
             },
 
             onFileSelected(event) {
